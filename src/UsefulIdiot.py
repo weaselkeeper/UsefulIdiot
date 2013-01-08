@@ -44,33 +44,74 @@ class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
     log.debug('in class UsefulIdiot()')
 
-    def __init__(self):
-        """Intialize the idiot"""
+    def __init__(self, plugin):
+        """Initialize the idiot"""
         log.debug('in UsefulIdiot().__init__()')
 
-        plugins = []
+class ConfigFile(object):
+    """Object to facilitate config file access"""
+    log.debug('in class ConfigFile()')
 
-    def configure(self):
-        """Read configuration for this idiot"""
-        log.debug('in UsefulIdiot().configure()')
+    import ConfigParser
+    filename = None
+    configparser = None
 
-        from ConfigParser import SafeConfigParser
+    def __init__(self, filename):
+        """Initialize ConfigFile object"""
+        log.debug('in ConfigFile().init(self, %s)' % filename)
+        self.filename = filename
+        self.configparser = self._get_config(filename)
 
-        parser = SafeConfigParser()
-        configfile = '/etc/usefulidiot/usefulidiot.conf'
-        if os.path.isfile(configfile):
-            log.debug('reading config from: %s' % configfile)
-        else:
-            log.debug('unable to read config file: %s' % configfile)
-            sys.exit(1)
-        parser.read(configfile)
-        self.plugins = parser.get('default', 'plugins')
+    def get_config(self, myfile):
+        """Load config file for parsing"""
+        log.debug('in ConfigFile().get_config(self, %s)' % myfile)
+        config = ConfigParser.ConfigParser()
+        config.read(myfile)
+        log.debug('returning config: %s' % config)
+        return config
+
+    def get_item(self, cfgitem, section='default', hard_fail=False):
+        """Retrieve value for requested key from the config file"""
+        log.debug('in ConfigFile().get_item(self, %s, %s, %s)' % (cfgitem, section, hard_fail))
+
+        def do_fail(err):
+           if hard_fail:
+              log.error(err)
+              sys.exit(-1)
+           else:
+              log.info(err)
+
+        item = None
+        try:
+           item = self.configparser.get(section, cfgitem)
+        except ConfigParser.NoOptionError, e:
+            do_fail(e)
+        except ConfigParser.NoSectionError, e:
+            do_fail(e)
+
+        log.debug('returning item: %s' % item)
+        return item
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
 
     import argparse
+    import random import choice
     cmd_parser = argparse.ArgumentParser(description='Command a useful idiot to do something to your server')
     cmd_parser.add_argument('-d', '--debug', dest='debug', action='store_true', help='Enable debugging during execution', default=None)
 
-    idiot = UsefulIdiot()
+    configfile = '/etc/usefulidiot/usefulidiot.conf'
+    if os.path.isfile(configfile):
+        log.debug('reading config from: %s' % configfile)
+    else:
+        log.debug('unable to read config file: %s' % configfile)
+        sys.exit(1)
+    cfg = ConfigFile(configfile)
+
+    plugins = []
+    plugins.append(cfg.get_item('plugins'))
+    log.debug('found plugin(s): %s' % plugins)
+    loaded_plugin = choice(plugins)
+    log.debug('randomly selected plugin: %s' % loaded_plugin)
+
+    idiot = UsefulIdiot(loaded_plugin)
