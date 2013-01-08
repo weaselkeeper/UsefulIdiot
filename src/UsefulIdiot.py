@@ -26,18 +26,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 :email: david.wahlstrom@gmail.com
 
 """
-
+import os
 import sys
 import logging
 
-logging.basicConfig(level=logging.WARN,                                         
-                    format='%(asctime)s %(levelname)s - %(message)s',           
-                    datefmt='%y.%m.%d %H:%M:%S'                                 
-                   )                                                            
-console = logging.StreamHandler(sys.stderr)                                     
-console.setLevel(logging.WARN)                                                  
-logging.getLogger("usefulidiot").addHandler(console)                                   
-log = logging.getLogger("usefulidiot") 
+logging.basicConfig(level=logging.WARN,
+                    format='%(asctime)s %(levelname)s - %(message)s',
+                    datefmt='%y.%m.%d %H:%M:%S'
+                   )
+console = logging.StreamHandler(sys.stderr)
+console.setLevel(logging.WARN)
+logging.getLogger("usefulidiot").addHandler(console)
+log = logging.getLogger("usefulidiot")
 
 class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
@@ -62,7 +62,7 @@ class UsefulIdiot(object):
         else:
             log.debug('unable to read config file: %s' % configfile)
             sys.exit(1)
-        parser.read(config)
+        parser.read(configfile)
         self.plugins = parser.get('default', 'plugins')
 
 if __name__ == "__main__":
