@@ -46,7 +46,7 @@ class UsefulIdiot(object):
 
     def __init__(self, plugin):
         """Initialize the idiot"""
-        log.debug('in UsefulIdiot().__init__()')
+        log.debug('in UsefulIdiot().__init__(self, %s)' % plugin)
 
 class ConfigFile(object):
     """Object to facilitate config file access"""
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
 
     import argparse
-    import random import choice
+    from random import choice
     cmd_parser = argparse.ArgumentParser(description='Command a useful idiot to do something to your server')
     cmd_parser.add_argument('-d', '--debug', dest='debug', action='store_true', help='Enable debugging during execution', default=None)
 
