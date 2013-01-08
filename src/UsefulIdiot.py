@@ -39,6 +39,7 @@ console.setLevel(logging.WARN)
 logging.getLogger("usefulidiot").addHandler(console)
 log = logging.getLogger("usefulidiot")
 
+
 class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
     log.debug('in class UsefulIdiot()')
