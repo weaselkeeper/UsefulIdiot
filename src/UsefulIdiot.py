@@ -103,6 +103,9 @@ if __name__ == "__main__":
     configfile = '/etc/usefulidiot/usefulidiot.conf'
     if os.path.isfile(configfile):
         log.debug('reading config from: %s' % configfile)
+    elif os.path.isfile('../usefulidiot.conf'):
+        log.debug('reading config from: ../conf/usefulidiot.conf')
+        configfile = '../conf/usefulidiot.conf'
     else:
         log.debug('unable to read config file: %s' % configfile)
         sys.exit(1)
