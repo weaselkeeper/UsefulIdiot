@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
-def run():
-    print "it worked!"
+def run(options={}):
+    print "it worked! with options: "
+    print options
 

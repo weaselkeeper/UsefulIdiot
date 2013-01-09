@@ -48,7 +48,7 @@ class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
     log.debug('in class UsefulIdiot()')
 
-    def __init__(self, plugin, path):
+    def __init__(self, plugin, path, options={}):
         """Initialize the idiot"""
         log.debug('in UsefulIdiot().__init__(self, %s, %s)' % (plugin, path))
 
@@ -56,12 +56,13 @@ class UsefulIdiot(object):
 
         log.debug('importing ' + path)
         self.module = imp.load_source(plugin, path)
+        self.options = options
 
     def run(self):
         """Execute the plugin's run method"""
         log.debug('in UsefulIdiot().run()')
 
-        self.module.run()
+        self.module.run(self.options)
 
 class ConfigFile(object):
     """Object to facilitate config file access"""
@@ -96,7 +97,7 @@ class ConfigFile(object):
                 log.error(err)
                 sys.exit(-1)
             else:
-                log.info(err)
+                log.debug(err)
 
         item = None
         try:
@@ -116,14 +117,31 @@ if __name__ == "__main__":
     from random import choice
 
     cmd_parser = argparse.ArgumentParser(
-        description='Command a useful idiot to do something to your server')
+        description='Command a useful idiot to do something to your server.')
     cmd_parser.add_argument('-d', '--debug', dest='debug',
-        action='store_true', help='Enable debugging during execution',
+        action='store_true', help='Enable debugging during execution.',
         default=None)
+    cmd_parser.add_argument('-o', '--options', dest='options', action='store',
+        default=None,
+        help='Key/value options to pass to the plugin. Must be in key=value form, seperated by a comma with no space. Example: foo=bar,baz=blah')
+    cmd_parser.add_argument('-p', '--plugin', dest='plugin_override',
+        action='store', default=None,
+        help='Specify a specific plugin to run, instead of choosing randomly.')
+    cmd_parser.add_argument('-P', '--pluginpath', dest='plugin_dir_override',
+        action='store', default=None,
+        help='Specify a path to load plugins from.')
     args = cmd_parser.parse_args()
 
     if args.debug:
         log.setLevel(logging.DEBUG)
+
+    options = {}
+    tmp_options = args.options
+    if tmp_options:
+        for pair in tmp_options.split(','):
+            key = pair.split('=')[0]
+            value = pair.split('=')[1]
+            options[key] = value
 
     configfile = '/etc/usefulidiot/usefulidiot.conf'
     if os.path.isfile(configfile):
@@ -136,21 +154,41 @@ if __name__ == "__main__":
         sys.exit(1)
     cfg = ConfigFile(configfile)
 
+    log.debug('detecting plugin(s) to use...')
     plugins = []
-    plugins.append(cfg.get_item('plugins'))
+    try:
+        plugins.append(plugin_override)
+        log.debug('overriding plugins to: %s' % plugins)
+    except NameError:
+        plugins.append(cfg.get_item('plugins'))
+        log.debug('plugins override not found, pulling from config file: %s' % plugins)
+    log.debug('found plugin(s) to use: %s' % plugins)
+
     if not plugins:
         log.debug('no plugins found')
-        print 'No plugins found. Exiting.'
+        print 'ERROR: No plugins found. Exiting.'
         sys.exit(1)
     log.debug('found plugin(s): %s' % plugins)
     loaded_plugin = choice(plugins)
     log.debug('randomly selected plugin: %s' % loaded_plugin)
 
-    log.debug('locating plugin to load...')
-    plugin_dir = cfg.get_item('plugin_dir')
+    log.debug('detecting plugin(s) directory...')
+    try:
+        log.debug('checking plugin_dir override')
+        plugin_dir = plugin_dir_override
+        log.debug('overriding plugin_dir to: %s' % plugin_dir)
+    except NameError:
+        log.debug('no override provided for plugin_dir, checking config file')
+        plugin_dir = cfg.get_item('plugin_dir')
+        if not plugin_dir:
+            log.debug('plugin_dir not found in config file')
+            plugin_dir = '/usr/share/usefulidiot/plugins/'
+            log.debug('plugin_dir set to default: %s' % plugin_dir)
+    log.debug('found plugin(s) directory to be: %s' % plugin_dir)
+
     if not os.path.isdir(plugin_dir):
         log.debug('plugin directory does not exist: %s' % plugin_dir)
-        print 'Plugin directory does not exist: %s' % plugin_dir
+        print 'ERROR: Plugin directory does not exist: %s' % plugin_dir
         sys.exit(1)
     log.debug('attempting to load plugin from %s' % plugin_dir)
     if os.path.isfile(plugin_dir + loaded_plugin):
@@ -162,8 +200,8 @@ if __name__ == "__main__":
         plugin_path = plugin_dir + loaded_plugin + '.py'
     else:
         log.debug('unable to find plugin')
-        print 'Unable to locate plugin ' + loaded_plugin
+        print 'ERROR: Unable to locate plugin ' + loaded_plugin
         sys.exit(1)
 
-    idiot = UsefulIdiot(loaded_plugin, plugin_path)
+    idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
     idiot.run()
