@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 def run(options={}):
-    print "it worked! with options: "
-    print options
+    import os
+    from random import choice
+    pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
+    print 'I would have killed: ' + choice(pids)
 
