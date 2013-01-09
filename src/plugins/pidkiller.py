@@ -1,10 +1,58 @@
 #!/usr/bin/env python
 
+# plugin options:
+#
+# [dry-run]
+# default: False
+# If True, only print what would have beeen done, but do not actually kill
+# the selected pid
+#
+# [ensure]
+# default: False
+# If True, this app will keep trying to kill a pid until it successfully does
+# so.  It is possible for a pid to be gone before this app tries to kill it,
+# thus making it no-op.
+
+import os
+import sys
+
 def run(options={}):
-    import os
+    """main loop for this plugin"""
+
     from random import choice
-    pids = pid for pid in os.listdir('/proc') if pid.isdigit()
+
+    # this is the pid we will kill
+    target_pid = choice(get_pids())
+
+    if 'dry-run' in options:
+        if 'true' in options['dry-run'].lower():
+            print 'I would have killed: ' + target_pid
+            sys.exit(0)
+
+    if 'ensure' in options:
+        if True in options['ensure']:
+            success = 1
+            while success == 1:
+                target_pid = choice(get_pids)
+                success = kill_pid(target_pid)
+
+def kill_pid(pid):
+    """try to kill the pid, returning the result"""
+
+    if pid in get_pids():
+        try:
+            os.kill(pid, 9)
+            return 0
+        except OSError:
+            #pid already gone, so nothing to kill :(
+            return 1
+    #pid already gone, so nothing to kill :(
+    return 1
+
+def get_pids():
+    """get list of running pids"""
+    pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
     if 1 in pids:
         pids.remove(1)
-    print 'I would have killed: ' + choice(pids)
 
+    return pids
