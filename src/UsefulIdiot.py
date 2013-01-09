@@ -57,12 +57,24 @@ class UsefulIdiot(object):
         log.debug('importing ' + path)
         self.module = imp.load_source(plugin, path)
         self.options = options
+        self.status = 'SUCCESS'
+        self.message = ''
 
     def run(self):
         """Execute the plugin's run method"""
         log.debug('in UsefulIdiot().run()')
 
-        self.module.run(self.options)
+        self.status, self.message = self.module.run(self.options)
+
+    def get_run_status(self):
+        """Retrieve the return status/message of the module that was executed"""
+        log.debug('in UsefulIdiot().get_run_status()')
+
+        final_status = {}
+        final_status['status'] = self.status
+        final_status['message'] = self.message
+
+        return final_status
 
 class ConfigFile(object):
     """Object to facilitate config file access"""
@@ -114,6 +126,10 @@ if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
 
     import argparse
+    try:
+        import json
+    except ImportError:
+        import simplejson as json
     from random import choice
 
     cmd_parser = argparse.ArgumentParser(
@@ -205,3 +221,4 @@ if __name__ == "__main__":
 
     idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
     idiot.run()
+    print json.dumps(idiot.get_run_status())

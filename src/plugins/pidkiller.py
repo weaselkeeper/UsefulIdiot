@@ -21,13 +21,17 @@ def run(options={}):
 
     from random import choice
 
+    success = 0
+    message = "pidkiller did not complete it's run"
+
     # this is the pid we will kill
     target_pid = choice(get_pids())
 
     if 'dry-run' in options:
         if 'true' in options['dry-run'].lower():
-            print 'I would have killed: ' + target_pid
-            sys.exit(0)
+            message = 'I would have killed: ' + target_pid
+            return success, message
+            
 
     if 'ensure' in options:
         if True in options['ensure']:
@@ -35,6 +39,9 @@ def run(options={}):
             while success == 1:
                 target_pid = choice(get_pids)
                 success = kill_pid(target_pid)
+            message = "pid %s successfully killed!" % target_pid
+
+    return success, message
 
 def kill_pid(pid):
     """try to kill the pid, returning the result"""
