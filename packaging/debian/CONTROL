@@ -1,0 +1,8 @@
+Package: usefulidiot
+Version: 0.1-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: python python-argparse python-rpm
+Maintainer: David Wahlstrom <david.wahlstrom@gmail.com>
+Description: A python re-implimentation of Netflix's Simian Army
