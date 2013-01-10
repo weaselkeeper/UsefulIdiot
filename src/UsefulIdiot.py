@@ -146,6 +146,10 @@ if __name__ == "__main__":
     cmd_parser.add_argument('-P', '--pluginpath', dest='plugin_dir_override',
         action='store', default=None,
         help='Specify a path to load plugins from.')
+    cmd_parser.add_argument('-r', '--readable', dest='human_readable',
+        action='store_true', default=False,
+        help='Display output in human readable formant (as opposed to json).')
+    cmd_parser.add_argument('ansible_options', nargs='*')
     args = cmd_parser.parse_args()
 
     if args.debug:
@@ -233,4 +237,8 @@ if __name__ == "__main__":
 
     idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
     idiot.run()
-    print json.dumps(idiot.get_run_status())
+    if args.human_readable:
+        print idiot.get_run_status()['message']
+        sys.exit(idiot.get_run_status()['status'])
+    else:
+        print json.dumps(idiot.get_run_status())
