@@ -173,10 +173,15 @@ if __name__ == "__main__":
     log.debug('detecting plugin(s) to use...')
     plugins = []
     try:
-        plugins.append(plugin_override)
-        log.debug('overriding plugins to: %s' % plugins)
+        log.debug('checking plugin override')
+        if args.plugin_override:
+            plugins.append(args.plugin_override)
+            log.debug('overriding plugins to: %s' % plugins)
+        else:
+            log.debug('no plugin override detected')
+            raise NameError
     except NameError:
-        plugins.append(cfg.get_item('plugins'))
+        plugins = cfg.get_item('plugins').split(',')
         log.debug('plugins override not found, pulling from config file: %s' % plugins)
     log.debug('found plugin(s) to use: %s' % plugins)
 
@@ -191,8 +196,11 @@ if __name__ == "__main__":
     log.debug('detecting plugin(s) directory...')
     try:
         log.debug('checking plugin_dir override')
-        plugin_dir = plugin_dir_override
-        log.debug('overriding plugin_dir to: %s' % plugin_dir)
+        if args.plugin_dir_override:
+            plugin_dir = args.plugin_dir_override
+            log.debug('overriding plugin_dir to: %s' % plugin_dir)
+        else:
+            raise NameError
     except NameError:
         log.debug('no override provided for plugin_dir, checking config file')
         plugin_dir = cfg.get_item('plugin_dir')
@@ -201,6 +209,10 @@ if __name__ == "__main__":
             plugin_dir = '/usr/share/usefulidiot/plugins/'
             log.debug('plugin_dir set to default: %s' % plugin_dir)
     log.debug('found plugin(s) directory to be: %s' % plugin_dir)
+
+    if not plugin_dir:
+        print 'ERROR: Unable to determine plugin directory'
+        sys.exit(1)
 
     if not os.path.isdir(plugin_dir):
         log.debug('plugin directory does not exist: %s' % plugin_dir)
