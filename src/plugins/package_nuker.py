@@ -37,13 +37,9 @@ def run(options={}):
             
     sucess = rpm_uninstall(target_package)
 
-    print 'returned from rpm_uninstall()'
-
     return success, message
 
 def rpm_uninstall(pkg):
     """try to uninstall the package, returning the result"""
-
-    print 'running rpm_uninstall()'
 
     return 0
