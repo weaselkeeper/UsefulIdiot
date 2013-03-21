@@ -11,13 +11,15 @@
 
 # for now, all this does, is find a running service to play with, but as noted,
 # there are dangers.
+# This should probably just take a service option and bounce that. Or choose
+# from a list given in options
 
 import os
 import subprocess
 from random import shuffle
 
 
-def select_service():
+def run(options={}):
     not_running = 1
     s_list = os.listdir('/etc/init.d')
     while not_running:
@@ -35,5 +37,5 @@ def select_service():
     return service,service_status
 
 
-service,status = select_service()
-print service,status
+
+run()
