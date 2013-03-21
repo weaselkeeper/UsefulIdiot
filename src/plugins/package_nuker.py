@@ -8,8 +8,14 @@
 # the selected package
 #
 
-import rpm
 import sys
+try:
+    import rpm
+except ImportError:
+        error = """No rpm module avaible, maybe this isn't an rpm system? 
+Either install the rpm module, or find some other way"""
+        print error
+        sys.exit(1)
 
 def run(options={}):
     """main loop for this plugin"""
@@ -34,7 +40,7 @@ def run(options={}):
         if 'true' in options['dry-run'].lower():
             message = 'I would have uninstalled: %s' % target_package['name']
             return success, message
-            
+
     sucess = rpm_uninstall(target_package)
 
     return success, message
