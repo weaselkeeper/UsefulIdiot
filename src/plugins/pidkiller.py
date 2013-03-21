@@ -16,7 +16,7 @@
 import os
 import sys
 
-def run(dry_run=0,ensure=1):
+def run(options={}):
     """main loop for this plugin"""
 
     from random import choice
@@ -27,13 +27,14 @@ def run(dry_run=0,ensure=1):
     # this is the pid we will kill
     target_pid = choice(get_pids())
 
-    if dry_run:
-        proc = open(("/proc/%s/cmdline" % target_pid),'r')
-        message = 'I would have killed: ' + target_pid + ' ' + proc.readline()
-        return success, message
+    if 'dry-run' in options:
+        if 'true' in options['dry-run'].lower():
+            message = 'I would have killed: ' + target_pid
+            return success, message
+            
 
-
-    if ensure:
+    if 'ensure' in options:
+        if True in options['ensure']:
             success = 1
             while success == 1:
                 target_pid = choice(get_pids)
@@ -58,10 +59,7 @@ def kill_pid(pid):
 def get_pids():
     """get list of running pids"""
     pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
-# don't kill init.
     if 1 in pids:
         pids.remove(1)
+
     return pids
-
-success,message = run(dry_run=1)
-
