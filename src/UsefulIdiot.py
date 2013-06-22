@@ -134,6 +134,8 @@ if __name__ == "__main__":
 
     cmd_parser = argparse.ArgumentParser(
         description='Command a useful idiot to do something to your server.')
+    cmd_parser.add_argument('-l', '--list_plugins',dest='list_plugins',
+        action='store_true', help='List available plugins',default=False)
     cmd_parser.add_argument('-d', '--debug', dest='debug',
         action='store_true', help='Enable debugging during execution.',
         default=None)
@@ -188,6 +190,11 @@ if __name__ == "__main__":
         plugins = cfg.get_item('plugins').split(',')
         log.debug('plugins override not found, pulling from config file: %s' % plugins)
     log.debug('found plugin(s) to use: %s' % plugins)
+    if args.list_plugins:
+        print 'available plugins are:'
+        for element in plugins:
+            print element,
+        sys.exit(0)
 
     if not plugins:
         log.debug('no plugins found')
