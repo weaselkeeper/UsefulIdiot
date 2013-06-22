@@ -41,7 +41,7 @@ def run(options={}):
             message = 'I would have uninstalled: %s' % target_package['name']
             return success, message
 
-    sucess = rpm_uninstall(target_package)
+    success = rpm_uninstall(target_package)
 
     return success, message
 
