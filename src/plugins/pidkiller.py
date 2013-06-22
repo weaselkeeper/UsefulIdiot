@@ -32,7 +32,6 @@ def run(options={}):
             message = 'I would have killed: ' + target_pid
             return success, message
 
-
     if 'ensure' in options:
         if True in options['ensure']:
             success = 1

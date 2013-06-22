@@ -7,6 +7,10 @@
 # If True, only print what would have beeen done, but do not actually uninstall
 # the selected package
 #
+# Currently, this plugin only supports rpm packages. Will likely add .deb at
+# least. Additionally, it will faile if the package has others dependant upon
+# it, unsure if we should force, or switch to using yum/apt and removing those
+# dependant packages also.
 
 import sys
 try:
@@ -19,7 +23,7 @@ Either install the rpm module, or find some other way"""
 
 def run(options={}):
     """main loop for this plugin"""
-
+    print options
     from random import choice
 
     success = 0
