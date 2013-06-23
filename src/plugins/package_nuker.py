@@ -21,9 +21,9 @@ Either install the rpm module, or find some other way"""
         print error
         sys.exit(1)
 
-def run(options={},dryrun=False):
+def run(options={}):
+    print options.keys()
     """main loop for this plugin"""
-    print options
     from random import choice
 
     success = 0
@@ -40,7 +40,12 @@ def run(options={},dryrun=False):
     # this is the package we will uninstall
     target_package = choice(packages_installed)
 
-    if dryrun:
+    if 'dryrun' in options:
+        if options['dryrun'] == True:
+            message = 'I would have removed ' + target_package
+            return success, message
+
+    if options['dryrun']==True:
         message = 'I would have uninstalled: %s' % target_package['name']
         return success, message
 

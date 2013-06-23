@@ -48,7 +48,7 @@ class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
     log.debug('in class UsefulIdiot()')
 
-    def __init__(self, plugin, path, options={},dryrun=False):
+    def __init__(self, plugin, path, options={}):
         """Initialize the idiot"""
         log.debug('in UsefulIdiot().__init__(self, %s, %s)' % (plugin, path))
 
@@ -63,7 +63,7 @@ class UsefulIdiot(object):
     def run(self):
         """Execute the plugin's run method"""
         log.debug('in UsefulIdiot().run()')
-        self.status, self.message = self.module.run(self.options,dryrun)
+        self.status, self.message = self.module.run(self.options)
 
     def get_run_status(self):
         """Retrieve the return status/message of the module that was executed"""
@@ -167,6 +167,15 @@ if __name__ == "__main__":
             key = pair.split('=')[0]
             value = pair.split('=')[1]
             options[key] = value
+        """ Now we add the dry-run option to the end, if set, to simplify the
+        calling process for the plugin"""
+        if args.dryrun:
+            options['dryrun'] = args.dryrun
+    else:
+        """need to add dryrun here, if no ansible options were passed"""
+        options = {}
+        if args.dryrun:
+            options['dryrun'] = args.dryrun
 
     configfile = '/etc/usefulidiot/usefulidiot.conf'
     if os.path.isfile(configfile):
@@ -250,7 +259,7 @@ if __name__ == "__main__":
     else:
         dryrun=False
 
-    idiot = UsefulIdiot(loaded_plugin, plugin_path, options,dryrun=False)
+    idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
     idiot.run()
     if args.human_readable:
         print idiot.get_run_status()['message']
