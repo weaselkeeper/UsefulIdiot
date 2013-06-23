@@ -48,7 +48,7 @@ class UsefulIdiot(object):
     """Object to instantiate and control a useful idiot"""
     log.debug('in class UsefulIdiot()')
 
-    def __init__(self, plugin, path, options={}):
+    def __init__(self, plugin, path, options={},dryrun=False):
         """Initialize the idiot"""
         log.debug('in UsefulIdiot().__init__(self, %s, %s)' % (plugin, path))
 
@@ -63,7 +63,7 @@ class UsefulIdiot(object):
     def run(self):
         """Execute the plugin's run method"""
         log.debug('in UsefulIdiot().run()')
-        self.status, self.message = self.module.run(self.options)
+        self.status, self.message = self.module.run(self.options,dryrun)
 
     def get_run_status(self):
         """Retrieve the return status/message of the module that was executed"""
@@ -159,6 +159,8 @@ if __name__ == "__main__":
         log.setLevel(logging.DEBUG)
 
     options = {}
+    """Note, this refers to the ansible options list above, not all the options
+    handed to UsefulIdiot via the command line """
     tmp_options = args.options
     if tmp_options:
         for pair in tmp_options.split(','):
@@ -243,7 +245,12 @@ if __name__ == "__main__":
         print 'ERROR: Unable to locate plugin ' + loaded_plugin
         sys.exit(1)
 
-    idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
+    if args.dryrun:
+        dryrun=True
+    else:
+        dryrun=False
+
+    idiot = UsefulIdiot(loaded_plugin, plugin_path, options,dryrun=False)
     idiot.run()
     if args.human_readable:
         print idiot.get_run_status()['message']

@@ -2,7 +2,7 @@
 
 # plugin options:
 #
-# [dry-run]
+# [dryrun]
 # default: False
 # If True, only print what would have beeen done, but do not actually kill
 # the selected pid
@@ -16,7 +16,7 @@
 import os
 import sys
 
-def run(options={}):
+def run(options={},dryrun=False):
     """main loop for this plugin"""
 
     from random import choice
@@ -26,11 +26,11 @@ def run(options={}):
 
     # this is the pid we will kill
     target_pid = choice(get_pids())
+    message = "pidkiller did not complete it's run, for some reason, failing to kill Process %s" % target_pid
 
-    if 'dryrun' in options:
-        if 'true' in options['dryrun'].lower():
-            message = 'I would have killed: ' + target_pid
-            return success, message
+    if dryrun:
+        message = 'I would have killed: ' + target_pid
+        return success, message
 
     if 'ensure' in options:
         if True in options['ensure']:

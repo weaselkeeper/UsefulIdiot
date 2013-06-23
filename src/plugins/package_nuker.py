@@ -2,7 +2,7 @@
 
 # plugin options:
 #
-# [dry-run]
+# [dryrun]
 # default: False
 # If True, only print what would have beeen done, but do not actually uninstall
 # the selected package
@@ -21,7 +21,7 @@ Either install the rpm module, or find some other way"""
         print error
         sys.exit(1)
 
-def run(options={}):
+def run(options={},dryrun=False):
     """main loop for this plugin"""
     print options
     from random import choice
@@ -40,11 +40,9 @@ def run(options={}):
     # this is the package we will uninstall
     target_package = choice(packages_installed)
 
-    if 'dryrun' in options:
-        print "woohoo!"
-        if 'true' in options['dryrun'].lower():
-            message = 'I would have uninstalled: %s' % target_package['name']
-            return success, message
+    if dryrun:
+        message = 'I would have uninstalled: %s' % target_package['name']
+        return success, message
 
     success = rpm_uninstall(target_package)
 
