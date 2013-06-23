@@ -63,7 +63,6 @@ class UsefulIdiot(object):
     def run(self):
         """Execute the plugin's run method"""
         log.debug('in UsefulIdiot().run()')
-
         self.status, self.message = self.module.run(self.options)
 
     def get_run_status(self):
@@ -134,7 +133,7 @@ if __name__ == "__main__":
 
     cmd_parser = argparse.ArgumentParser(
         description='Command a useful idiot to do something to your server.')
-    cmd_parser.add_argument('-n', '--dry-run',dest='dry-run',
+    cmd_parser.add_argument('-n', '--dry-run',dest='dryrun',
         action='store_true', help='Dry run, do not actually perform action',default=False)
     cmd_parser.add_argument('-l', '--list_plugins',dest='list_plugins',
         action='store_true', help='List available plugins',default=False)

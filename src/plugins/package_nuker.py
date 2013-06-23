@@ -40,8 +40,9 @@ def run(options={}):
     # this is the package we will uninstall
     target_package = choice(packages_installed)
 
-    if 'dry-run' in options:
-        if 'true' in options['dry-run'].lower():
+    if 'dryrun' in options:
+        print "woohoo!"
+        if 'true' in options['dryrun'].lower():
             message = 'I would have uninstalled: %s' % target_package['name']
             return success, message
 

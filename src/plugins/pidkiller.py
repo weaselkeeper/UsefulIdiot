@@ -27,8 +27,8 @@ def run(options={}):
     # this is the pid we will kill
     target_pid = choice(get_pids())
 
-    if 'dry-run' in options:
-        if 'true' in options['dry-run'].lower():
+    if 'dryrun' in options:
+        if 'true' in options['dryrun'].lower():
             message = 'I would have killed: ' + target_pid
             return success, message
 
