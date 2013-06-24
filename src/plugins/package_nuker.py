@@ -55,5 +55,6 @@ def run(options={}):
 
 def rpm_uninstall(pkg):
     """try to uninstall the package, returning the result"""
-
+    ts = rpm.TransactionSet()
+    ts.addErase(pkg)
     return 0
