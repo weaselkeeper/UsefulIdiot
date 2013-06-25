@@ -152,6 +152,9 @@ if __name__ == "__main__":
     cmd_parser.add_argument('-r', '--readable', dest='human_readable',
         action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
+    cmd_parser.add_argument('-c', '--config', dest='config_override',
+        action='store', default=None,
+        help='Specify a path to load plugins from.')
     cmd_parser.add_argument('ansible_options', nargs='*')
     args = cmd_parser.parse_args()
 
@@ -178,7 +181,11 @@ if __name__ == "__main__":
             options['dryrun'] = args.dryrun
 
     configfile = '/etc/usefulidiot/usefulidiot.conf'
-    if os.path.isfile(configfile):
+    if args.config_override:
+        configfile = args.config_override
+        log.debug('config file location overriden on invocation, attempting \
+            to use %s as config file source' % configfile )
+    elif os.path.isfile(configfile):
         log.debug('reading config from: %s' % configfile)
     elif os.path.isfile('../config/usefulidiot.conf'):
         log.debug('reading config from: ../config/usefulidiot.conf')
