@@ -154,7 +154,7 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     cmd_parser.add_argument('-c', '--config', dest='config_override',
         action='store', default=None,
-        help='Specify a path to load plugins from.')
+        help='Specify a path to an alternate config file')
     cmd_parser.add_argument('ansible_options', nargs='*')
     args = cmd_parser.parse_args()
 
