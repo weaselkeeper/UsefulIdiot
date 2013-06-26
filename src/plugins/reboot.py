@@ -9,6 +9,9 @@
 #
 
 import subprocess
+import socket
+
+hostname = socket.gethostname()
 
 def run(options={}):
     """main loop for this plugin"""
@@ -18,8 +21,6 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            import socket
-            hostname = socket.gethostname()
             message = 'I would have rebooted server %s' % hostname
             return success, message
     success,message = reboot_system()
@@ -27,16 +28,16 @@ def run(options={}):
 
 def reboot_system():
     """you realize this is dangerous, right?"""
-    #shutdown = "/sbin/shutdown -r now"
+    shutdown = "/sbin/shutdown -r now"
     # Use the following command for testing.
     shutdown = '/bin/echo "help me!"'
     try:
         subprocess.check_call(shutdown.split())
         success = 1
-        message = 'rebooting server'
+        message = 'rebooting server %s' % hostname
         return success,message
     except:
         success = 0
-        message = 'unable to reboot server'
+        message = 'unable to reboot server %s' % hostname
         return success,message
 run()
