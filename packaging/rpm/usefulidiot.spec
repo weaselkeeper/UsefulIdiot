@@ -1,6 +1,6 @@
 Name:           UsefulIdiot
-Version:        0.1
-Release:        1%{dist}
+Version:        0.2
+Release:        %{dist}
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
 URL:            https://github.com/weaselkeeper/UsefulIdiot
@@ -12,7 +12,7 @@ BuildArch:      noarch
 Requires:       python
 Requires:       rpm-python
 Requires:       python-argparse
-Requires:	python-simplejson
+Requires:       python-simplejson
 
 %description
 A plugable framework to create chaos on your network. Designed to be used with
@@ -48,4 +48,5 @@ rm -rf %{buildroot}
 %changelog
 * Thu Jan 10 2013 David Wahlstrom <dwahlstrom@classmates.com> - 0.1-1
 - initial packaging of UsefulIdiot
-
+* Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
+- Added a couple plugins, cronripper,runpuppet, and reboot
