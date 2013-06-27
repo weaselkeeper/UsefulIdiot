@@ -28,16 +28,17 @@ def run(options={}):
 
 def reboot_system():
     """you realize this is dangerous, right?"""
-    shutdown = "/sbin/shutdown -r now"
     # Use the following command for testing.
-    shutdown = '/bin/echo "help me!"'
     try:
-        subprocess.check_call(shutdown.split())
+        shutdown = subprocess.Popen(['/sbin/shutdown','now'],
+                stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        out, err = shutdown.communicate()
+        print out,err
         success = 1
         message = 'rebooting server %s' % hostname
         return success,message
-    except:
+    except Exception as error:
         success = 0
-        message = 'unable to reboot server %s' % hostname
+        message = 'unable to reboot server %s due to' % hostname,error
         return success,message
 run()
