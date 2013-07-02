@@ -40,18 +40,17 @@ requirements: [ crontab, ]                                                     g
 author: Jim Richardson <weaselkeeper@gmail.com>                                g
 '''
 
-import os
+import subprocess
+from random import choice
 
 def run(options={}):
     """main loop for this plugin"""
 
-    from random import choice
-
     success = 0
     message = "cronripper did not complete it's run"
 
-    # this is the pid we will kill
-    target_user = choice(get_user())
+    # this is the user whose cron we will kill
+    target_user = get_user()
     message = "cronripper was unable to remove crontab for user %s " % target_user
 
     if 'dryrun' in options:
@@ -66,22 +65,33 @@ def run(options={}):
 
 def kill_crontab(user):
     """try to delete the crontab for user, returning the result"""
-
     try:
-        "NOTDONE YET  Get os.subprocess to kill teh cron!"
-        return 0
-    except OSError:
-        #somefailure and error checking here.
-        return 1
-    #pid already gone, so nothing to kill :(
-    return 1
+        user_var = '-u' + user
+        cronkill = subprocess.Popen(['crontab','-r',user_var],
+                stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        out, err = cronkill.communicate()
+        success = 1
+        message = 'removed crontab for user %s' % user
+        return success,message
+
+    except Exception as error:
+        success = 0
+        message = 'unable to remove crontab for %s due to %s' % user,error
+        return success,message
+
 
 def get_user():
     """get list of valid users with crontabs"""
-    user =  "# DO stuff"
+    users = subprocess.Popen(['getent','passwd'],
+        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+    user_list,error = users.communicate()
+    user = choice(user_list.split('\n'))
+    user = user.split(':')[0]
     return user
 
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    run()
+    success,message = run()
+    print success,message
