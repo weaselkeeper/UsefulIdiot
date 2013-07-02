@@ -25,6 +25,11 @@ def run(options={}):
     while not_running:
         shuffle(s_list)
         service = '/etc/init.d/' + s_list.pop()
+        if 'dryrun' in options:
+            if options['dryrun'] == True:
+                success = 1
+                message = 'I would have tried to bounce: ' + service
+                return success,message
         try:
             service_status = subprocess.Popen([service,'status'],
                 stdout=subprocess.PIPE).communicate()[0]
