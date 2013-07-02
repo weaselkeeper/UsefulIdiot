@@ -14,7 +14,6 @@
 # thus making it no-op.
 
 import os
-import sys
 
 def run(options={}):
     """main loop for this plugin"""
@@ -63,3 +62,8 @@ def get_pids():
         pids.remove(1)
 
     return pids
+
+if __name__ == "__main__":
+    """This is where we will begin when called from CLI"""
+    run()
+

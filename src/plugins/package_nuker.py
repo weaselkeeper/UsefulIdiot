@@ -58,3 +58,10 @@ def rpm_uninstall(pkg):
     ts = rpm.TransactionSet()
     ts.addErase(pkg)
     return 0
+
+
+
+if __name__ == "__main__":
+    """This is where we will begin when called from CLI"""
+    run()
+

@@ -80,3 +80,8 @@ def get_user():
     """get list of valid users with crontabs"""
     user =  "# DO stuff"
     return user
+
+
+if __name__ == "__main__":
+    """This is where we will begin when called from CLI"""
+    run()

@@ -41,4 +41,8 @@ def reboot_system():
         success = 0
         message = 'unable to reboot server %s due to' % hostname,error
         return success,message
-run()
+
+if __name__ == "__main__":
+    """This is where we will begin when called from CLI"""
+    run()
+
