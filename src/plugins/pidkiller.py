@@ -65,5 +65,6 @@ def get_pids():
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    run()
+    success,message = run()
+    print success,message
 
