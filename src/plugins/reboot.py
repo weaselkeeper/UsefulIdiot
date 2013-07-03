@@ -39,11 +39,11 @@ def reboot_system():
             message = 'rebooting server %s' % hostname
         else:
             success = 0
-            message = 'unable to reboot server %s due to' % hostname,err
+            message = 'unable to reboot server %s due to %s' % (hostname,err)
         return success,message
     except Exception as error:
         success = 0
-        message = 'unable to reboot server %s due to' % hostname,error
+        message = 'unable to reboot server %s due to %s' % (hostname,error)
         return success,message
 
 if __name__ == "__main__":
