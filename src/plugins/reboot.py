@@ -33,9 +33,13 @@ def reboot_system():
         shutdown = subprocess.Popen(['/sbin/shutdown','now'],
                 stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         out, err = shutdown.communicate()
-        print out,err
-        success = 1
-        message = 'rebooting server %s' % hostname
+        return_code = shutdown.returncode
+        if return_code == 0:
+            success = 1
+            message = 'rebooting server %s' % hostname
+        else:
+            success = 0
+            message = 'unable to reboot server %s due to' % hostname,err
         return success,message
     except Exception as error:
         success = 0
