@@ -3,7 +3,7 @@
 
 # Restart puppet on target machine, if someone has manually killed puppet, or
 # it died for some reason, it will be restarted.  If they are relying on it
-# being down, they are in for a surprise. 
+# being down, they are in for a surprise.
 #
 # Serves them right for not disabling puppet correctly.
 
@@ -12,8 +12,8 @@
 #
 # [dryrun]
 # default: False
-# If True, only print what would have been done, but do not actually kill
-# the selected pid
+# If True, only print what would have been done, but do not actually restart
+# puppet
 #
 
 import subprocess

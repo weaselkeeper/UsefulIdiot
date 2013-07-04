@@ -27,7 +27,7 @@ def run(options={}):
         service = '/etc/init.d/' + s_list.pop()
         if 'dryrun' in options:
             if options['dryrun'] == True:
-                success = 1
+                success = 0
                 message = 'I would have tried to bounce: %s ' $ service
                 return success,message
         try:

@@ -46,7 +46,7 @@ from random import choice
 def run(options={}):
     """main loop for this plugin"""
 
-    success = 0
+    success = 1
     message = "cronripper did not complete it's run"
 
     # this is the user whose cron we will kill
@@ -70,12 +70,12 @@ def kill_crontab(user):
         cronkill = subprocess.Popen(['crontab','-r',user_var],
                 stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
-        success = 1
+        success = 0
         message = 'removed crontab for user %s' % user
         return success,message
 
     except Exception as error:
-        success = 0
+        success = 1
         message = 'unable to remove crontab for %s due to %s' % (user,error)
         return success,message
 

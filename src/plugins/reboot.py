@@ -16,11 +16,12 @@ hostname = socket.gethostname()
 def run(options={}):
     """main loop for this plugin"""
 
-    success = 0
+    success = 1
     message = 'reboot unsuccessful'
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
+            success = 0
             message = 'I would have rebooted server %s' % hostname
             return success, message
     success,message = reboot_system()
@@ -35,14 +36,14 @@ def reboot_system():
         out, err = shutdown.communicate()
         return_code = shutdown.returncode
         if return_code == 0:
-            success = 1
+            success = 0
             message = 'rebooting server %s' % hostname
         else:
-            success = 0
+            success = 1
             message = 'unable to reboot server %s due to %s' % (hostname,err)
         return success,message
     except Exception as error:
-        success = 0
+        success = 1
         message = 'unable to reboot server %s due to %s' % (hostname,error)
         return success,message
 
