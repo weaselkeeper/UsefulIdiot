@@ -55,7 +55,7 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have decronned: ' + target_user
+            message = 'I would have decronned: %s ' % target_user
             return success, message
 
     success = kill_crontab(target_user)
@@ -76,7 +76,7 @@ def kill_crontab(user):
 
     except Exception as error:
         success = 0
-        message = 'unable to remove crontab for %s due to %s' % user,error
+        message = 'unable to remove crontab for %s due to %s' % (user,error)
         return success,message
 
 

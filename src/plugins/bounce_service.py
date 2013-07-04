@@ -28,7 +28,7 @@ def run(options={}):
         if 'dryrun' in options:
             if options['dryrun'] == True:
                 success = 1
-                message = 'I would have tried to bounce: ' + service
+                message = 'I would have tried to bounce: %s ' $ service
                 return success,message
         try:
             service_status = subprocess.Popen([service,'status'],

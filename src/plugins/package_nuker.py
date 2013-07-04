@@ -42,7 +42,7 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have removed ' + target_package
+            message = 'I would have removed %s ' % target_package
             return success, message
 
     if options['dryrun']==True:

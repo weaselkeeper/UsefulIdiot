@@ -29,7 +29,7 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have killed: ' + target_pid
+            message = 'I would have killed: %s' % target_pid
             return success, message
 
     if 'ensure' in options:
