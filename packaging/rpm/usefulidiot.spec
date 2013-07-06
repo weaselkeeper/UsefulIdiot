@@ -1,5 +1,5 @@
 Name:           UsefulIdiot
-Version:        0.2
+Version:        0.3
 Release:        %{dist}
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
@@ -29,7 +29,7 @@ rm -rf %{buildroot}
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/usefulidiot
 %{__mkdir_p} %{buildroot}%{_datadir}/usefulidiot/plugins
 %{__mkdir_p} %{buildroot}%{_localstatedir}/log/usefulidiot
-cp -r ./src/plugins/* %{buildroot}%{_bindir}/usefulidiot/plugins/
+cp -r ./src/plugins/*.py %{buildroot}%{_bindir}/usefulidiot/plugins/
 cp -r ./src/UsefulIdiot.py %{buildroot}%{_bindir}/usefulidiot/
 cp -r ./conf/* %{buildroot}%{_sysconfdir}/usefulidiot
 
@@ -50,3 +50,5 @@ rm -rf %{buildroot}
 - initial packaging of UsefulIdiot
 * Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
 - Added a couple plugins, cronripper,runpuppet, and reboot
+* Sat Jul 06 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.3
+- Added runpuppet plugin, plus numerous changes to __main__ Also added config reading.
