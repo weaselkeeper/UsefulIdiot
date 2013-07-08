@@ -4,8 +4,8 @@
 #
 # [dryrun]
 # default: False
-# If True, only print what would have beeen done, but do not actually kill
-# the selected pid
+# If True, only print what would have beeen done, but do not actually reboot
+# the selected server
 #
 
 import subprocess
