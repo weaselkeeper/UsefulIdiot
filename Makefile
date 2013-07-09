@@ -15,16 +15,21 @@ help:
 	@echo 'Usage:							'
 	@echo '   make debian or make rpm				'
 
+###########
+## Some setup
+
+authors:
+	sh packaging/authors.sh
 
 ###########
-## TOMAHAWK
-
-deb:
-	cd $(BASEDIR) && mkdir BUILD_TEMP && cd BUILD_TEMP
-
+## Build packages
 
 rpm:
-	pass
+	cd $(BASEDIR) && mkdir -p BUILD_TEMP/rpm && cd BUILD_TEMP/rpm
+
+deb:
+	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && cd BUILD_TEMP/debian
+
 
 clean:
 	cd $(BASEDIR) && rm -rf BUILD_TEMP && cd -
