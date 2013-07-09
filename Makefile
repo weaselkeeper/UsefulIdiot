@@ -1,10 +1,9 @@
 SHELL := /bin/bash
 
-BASEDIR=$(CURDIR)
-
 DEBFULLNAME=Jim Richardson
 DEBEMAIL=weaselkeeper@gmail.com
 SOURCE_URL=https://github.com/tomahawk-player/tomahawk.git
+BASEDIR := $(shell git rev-parse --show-toplevel)
 
 
 NIGHTLY=$(shell date +'%Y.%m.%d.nightly')
@@ -33,4 +32,4 @@ deb: authors
 	cd BUILD_TEMP/debian
 
 clean:
-	cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT cd -
+	cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT
