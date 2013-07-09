@@ -24,12 +24,13 @@ authors:
 ###########
 ## Build packages
 
-rpm:
-	cd $(BASEDIR) && mkdir -p BUILD_TEMP/rpm && cd BUILD_TEMP/rpm
+rpm: authors
+	cd $(BASEDIR) && mkdir -p BUILD_TEMP/rpm
+	cd BUILD_TEMP/rpm
 
-deb:
-	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && cd BUILD_TEMP/debian
-
+deb: authors
+	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && echo 'setting up temp build env'
+	cd BUILD_TEMP/debian
 
 clean:
-	cd $(BASEDIR) && rm -rf BUILD_TEMP && cd -
+	cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT cd -
