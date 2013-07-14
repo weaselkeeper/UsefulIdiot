@@ -4,16 +4,9 @@
 #
 # [dryrun]
 # default: False
-# If True, only print what would have beeen done, but do not actually kill
-# the selected pid
+# If True, only print what would have beeen done, but do not actually delete
+# the selected user's cron
 #
-# [ensure]
-# default: False
-# If True, this app will keep trying to kill a pid until it successfully does
-# so.  It is possible for a pid to be gone before this app tries to kill it,
-# thus making it no-op.
-
-
 
 DOCUMENTATION = '''                                                            g
 ---                                                                            g
