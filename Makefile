@@ -46,5 +46,5 @@ deb: common
 
 clean:
 	rm -rf newtests
-	rm test.log
+	rm -f test.log
 	cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)_$(RELEASE).tar.gz
