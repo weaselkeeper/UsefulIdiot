@@ -48,3 +48,4 @@ clean:
 	rm -rf newtests
 	rm -f test.log
 	cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)_$(RELEASE).tar.gz
+	find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
