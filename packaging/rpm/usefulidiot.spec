@@ -1,5 +1,5 @@
 Name:           usefulidiot
-Version:        0.3
+Version:        0.4
 Release:        %{dist}
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
@@ -25,16 +25,16 @@ automation, documentation and/or monitoring.
 %install
 rm -rf %{buildroot}
 
-%{__mkdir_p} %{buildroot}%{_bindir}/usefulidiot
+%{__mkdir_p} %{buildroot}%{_bindir}
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/usefulidiot
 %{__mkdir_p} %{buildroot}%{_datadir}/usefulidiot/plugins
 %{__mkdir_p} %{buildroot}%{_localstatedir}/log/usefulidiot
 cp -r ./plugins/*.py %{buildroot}%{_datadir}/usefulidiot/plugins/
-cp -r ./UsefulIdiot.py %{buildroot}%{_bindir}/usefulidiot/
+cp -r ./UsefulIdiot.py %{buildroot}%{_bindir}/
 cp -r ./config/* %{buildroot}%{_sysconfdir}/usefulidiot
 
 %files
-%{_bindir}/usefulidiot/*
+%{_bindir}/UsefulIdiot.py
 %{_sysconfdir}/usefulidiot/*
 %{_datadir}/usefulidiot/*
 
@@ -46,6 +46,8 @@ cp -r ./config/* %{buildroot}%{_sysconfdir}/usefulidiot
 rm -rf %{buildroot}
 
 %changelog
+* Fri Jul 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.4
+- Rewrite of build Makefile.
 * Sat Jul 06 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.3
 - Added runpuppet plugin, plus numerous changes to __main__ Also added config reading.
 * Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2

@@ -1,5 +1,5 @@
 NAME = usefulidiot
-VERSION=0.3
+VERSION=0.4
 RELEASE=0
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
