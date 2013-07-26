@@ -55,7 +55,8 @@ all: srpm
 
 sources:
 	@mkdir usefulidiot
-	@cp -r src usefulidiot
+	@cp    src/UsefulIdiot.py usefulidiot
+	@cp -r src/plugins usefulidiot
 	@cp -r config usefulidiot
 	@mkdir -p $(SOURCEDIR)
 	@mkdir -p $(WORKDIR)
