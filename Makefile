@@ -25,6 +25,7 @@ authors:
 
 ###########
 nosetests:
+# no tests written yet, but here's the framework
 	mkdir newtests
 	PYTHONPATH=./ nosetests -v -w newtests/ 2>&1 | tee test.log
 
