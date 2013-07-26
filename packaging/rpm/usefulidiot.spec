@@ -1,6 +1,6 @@
 Name:           usefulidiot
 Version:        0.4
-Release:        %{dist}
+Release:        0
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
 URL:            https://github.com/weaselkeeper/UsefulIdiot

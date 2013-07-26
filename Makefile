@@ -1,3 +1,4 @@
+# Makefile is a confused mess.  Needs significant cleanup
 NAME = usefulidiot
 VERSION=0.4
 RELEASE=0
@@ -6,9 +7,6 @@ SPECFILE = $(firstword $(wildcard *.spec))
 WORKDIR := $(shell pwd)/work
 SRCRPMDIR ?= $(shell pwd)
 SPECFILE = packaging/rpm/usefulidiot.spec
-ifndef TARGET
-	TARGET := el6
-endif
 
 DEBFULLNAME=Jim Richardson
 DEBEMAIL=weaselkeeper@gmail.com
@@ -23,7 +21,6 @@ RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
 		--define "_builddir $(BUILDDIR)" \
 		--define "_srcrpmdir $(SRCRPMDIR)" \
 		--define "_rpmdir $(RPMDIR)" \
-		--define "dist $(TARGET)"
 
 VER_REL := $(shell rpm $(RPM_DEFINES) -q --qf "%{VERSION} %{RELEASE}\n" --specfile $(SPECFILE)| head -1)
 
