@@ -1,11 +1,11 @@
-Name:           UsefulIdiot
+Name:           usefulidiot
 Version:        0.3
 Release:        %{dist}
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
 URL:            https://github.com/weaselkeeper/UsefulIdiot
 Group:          System Environment/Base
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
@@ -29,9 +29,9 @@ rm -rf %{buildroot}
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/usefulidiot
 %{__mkdir_p} %{buildroot}%{_datadir}/usefulidiot/plugins
 %{__mkdir_p} %{buildroot}%{_localstatedir}/log/usefulidiot
-cp -r ./src/plugins/*.py %{buildroot}%{_bindir}/usefulidiot/plugins/
-cp -r ./src/UsefulIdiot.py %{buildroot}%{_bindir}/usefulidiot/
-cp -r ./conf/* %{buildroot}%{_sysconfdir}/usefulidiot
+cp -r ./plugins/*.py %{buildroot}%{_datadir}/usefulidiot/plugins/
+cp -r ./UsefulIdiot.py %{buildroot}%{_bindir}/usefulidiot/
+cp -r ./config/* %{buildroot}%{_sysconfdir}/usefulidiot
 
 %files
 %{_bindir}/usefulidiot/*
@@ -46,9 +46,9 @@ cp -r ./conf/* %{buildroot}%{_sysconfdir}/usefulidiot
 rm -rf %{buildroot}
 
 %changelog
-* Thu Jan 10 2013 David Wahlstrom <dwahlstrom@classmates.com> - 0.1-1
-- initial packaging of UsefulIdiot
-* Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
-- Added a couple plugins, cronripper,runpuppet, and reboot
 * Sat Jul 06 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.3
 - Added runpuppet plugin, plus numerous changes to __main__ Also added config reading.
+* Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
+- Added a couple plugins, cronripper,runpuppet, and reboot
+* Thu Jan 10 2013 David Wahlstrom <dwahlstrom@classmates.com> - 0.1-1
+- initial packaging of UsefulIdiot
