@@ -84,6 +84,7 @@ rpm: sources build-rpm
 
 # Cleanup
 clean:
+	@echo "cleaning up "
 	@/bin/rm -rf $(WORKDIR)
 	@/bin/rm -rf usefulidiot
 	@/bin/rm -rf usefulidiot*rpm
@@ -92,7 +93,7 @@ clean:
 	@rm -f test.log
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)_$(RELEASE).tar.gz
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
-
+	@ rm -rf noarch
 
 # Usage
 help:
