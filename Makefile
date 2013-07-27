@@ -42,6 +42,24 @@ TARSRC = $(NAME)-$(VERSION)
 #TODO: this should probably be a tag rather than just the latest commit.
 TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
 
+###########
+## Some setup
+
+authors:
+	sh packaging/authors.sh
+
+common: authors
+
+
+
+# Build targets
+
+# Debian related.
+deb: common
+	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && echo 'setting up temp build env'
+	cd BUILD_TEMP/debian
+
+# Redhat related
 build-srpm:
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
 
@@ -59,6 +77,12 @@ sources:
 	@mkdir -p $(WORKDIR)
 	@/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
 
+srpm: sources build-srpm 
+
+rpm: sources build-rpm 
+
+
+# Cleanup
 clean:
 	@/bin/rm -rf $(WORKDIR)
 	@/bin/rm -rf usefulidiot
@@ -69,10 +93,8 @@ clean:
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)_$(RELEASE).tar.gz
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 
-srpm: sources build-srpm 
 
-rpm: sources build-rpm 
-
+# Usage
 help:
 	@echo 'Makefile for UsefulIdiot, currently supports deb and rpm '
 	@echo ' builds from current source tree.				'
@@ -85,16 +107,7 @@ help:
 
 
 
-###########
-## Some setup
-
-authors:
-	sh packaging/authors.sh
-
-
-common: authors
-
-###########
+#Tests
 nosetests:
 # no tests written yet, but here's the framework
 	mkdir newtests
@@ -111,7 +124,4 @@ nosetests:
 #	cd BUILD_TEMP/rpm
 #	git archive HEAD --format tar.gz --output $(NAME)-$(VERSION)_$(RELEASE).tar.gz
 
-deb: common
-	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && echo 'setting up temp build env'
-	cd BUILD_TEMP/debian
 
