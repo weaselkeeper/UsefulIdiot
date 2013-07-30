@@ -105,7 +105,7 @@ help:
 	@echo "	srpm			Create srpm"
 	@echo "	rpm			Create rpm"
 	@echo "	clean			Remove work dir"
-
+	@echo "	deb			Create debian package"
 
 
 #Tests
