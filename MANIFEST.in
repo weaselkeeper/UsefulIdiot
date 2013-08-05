@@ -1,0 +1,5 @@
+include README.md packaging/rpm/usefulidiot.spec COPYING
+include config/usefulidiot.conf
+include src/usefulidiot.py
+recursive-include src/plugins *
+include Makefile
