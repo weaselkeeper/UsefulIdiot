@@ -36,8 +36,7 @@ import ConfigParser
 
 logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
-                    datefmt='%y.%m.%d %H:%M:%S'
-                   )
+                    datefmt='%y.%m.%d %H:%M:%S')
 console = logging.StreamHandler(sys.stderr)
 console.setLevel(logging.WARN)
 logging.getLogger("usefulidiot").addHandler(console)
@@ -75,6 +74,7 @@ class UsefulIdiot(object):
 
         return final_status
 
+
 class ConfigFile(object):
     """Object to facilitate config file access"""
     log.debug('in class ConfigFile()')
@@ -100,7 +100,7 @@ class ConfigFile(object):
     def get_item(self, cfgitem, section='default', hard_fail=False):
         """Retrieve value for requested key from the config file"""
         log.debug('in ConfigFile().get_item(self, %s, %s, %s)' % (cfgitem,
-            section, hard_fail))
+                  section, hard_fail))
 
         def do_fail(err):
             log.debug('in ConfigFile().get_item().do_fail(%s)' % err)
@@ -132,11 +132,13 @@ if __name__ == "__main__":
     from random import choice
 
     cmd_parser = argparse.ArgumentParser(
-        description='Command a useful idiot to do something to your server.')
-    cmd_parser.add_argument('-n', '--dry-run',dest='dryrun',
-        action='store_true', help='Dry run, do not actually perform action',default=False)
-    cmd_parser.add_argument('-l', '--list_plugins',dest='list_plugins',
-        action='store_true', help='List available plugins',default=False)
+        description = 'Command a useful idiot to do something to your server.')
+    cmd_parser.add_argument(
+        '-n', '--dry-run', dest = 'dryrun', action = 'store_true',
+        help = 'Dry run, do not actually perform action', default = False)
+    cmd_parser.add_argument(
+        '-l', '--list_plugins', dest = 'list_plugins', action = 'store_true',
+        help = 'List available plugins', default = False)
     cmd_parser.add_argument('-d', '--debug', dest='debug',
         action='store_true', help='Enable debugging during execution.',
         default=None)
@@ -184,7 +186,7 @@ if __name__ == "__main__":
     if args.config_override:
         configfile = args.config_override
         log.debug('config file location overriden on invocation, attempting \
-            to use %s as config file source' % configfile )
+            to use %s as config file source' % configfile)
     elif os.path.isfile(configfile):
         log.debug('reading config from: %s' % configfile)
     elif os.path.isfile('../config/usefulidiot.conf'):
@@ -207,7 +209,8 @@ if __name__ == "__main__":
             raise NameError
     except NameError:
         plugins = cfg.get_item('plugins').split(',')
-        log.debug('plugins override not found, pulling from config file: %s' % plugins)
+        log.debug('plugins override not found, pulling from config file: %s'
+                  % plugins)
     log.debug('found plugin(s) to use: %s' % plugins)
     if args.list_plugins:
         print 'available plugins are:'
@@ -262,9 +265,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if args.dryrun:
-        dryrun=True
+        dryrun = True
     else:
-        dryrun=False
+        dryrun = False
 
     idiot = UsefulIdiot(loaded_plugin, plugin_path, options)
     idiot.run()
