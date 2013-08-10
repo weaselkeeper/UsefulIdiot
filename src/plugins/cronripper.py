@@ -35,6 +35,8 @@ author: Jim Richardson <weaselkeeper@gmail.com>                                g
 
 import subprocess
 from random import choice
+import os
+
 
 def run(options={}):
     """main loop for this plugin"""
@@ -80,8 +82,11 @@ def get_user():
 
     user_list,error = users.communicate()
     user = choice(user_list.split('\n'))
-    user = user.split(':')[0]
-    return user
+    username = user.split(':')[0]
+    cronfile = '/var/spool/cron/' + username
+    if not os.path.exists(cronfile):
+        user = get_user()
+    return username
 
 
 if __name__ == "__main__":
