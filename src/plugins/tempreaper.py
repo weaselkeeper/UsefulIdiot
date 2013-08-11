@@ -33,6 +33,8 @@ author: Jim Richardson <weaselkeeper@gmail.com>                                g
 
 import os
 import time
+import shutil
+
 def run(options={}):
     """main loop for this plugin"""
 
@@ -56,8 +58,11 @@ def tmp_reaper(age):
     for f in os.listdir('/tmp'):
         tmpfile = os.path.join('/tmp',f)
         if os.stat(tmpfile).st_mtime < time.time()- ( age * 86400 ):
-            os.remove(tmpfile)
-            success, message = 0,"No files left in /tmp older than %d" % age
+            try:
+                os.remove(tmpfile)
+            except OSError:
+                shutil.rmtree(tmpfile)
+            success, message = 0,"No files left in /tmp older than %d days" % age
     return success,message
 
 if __name__ == "__main__":
