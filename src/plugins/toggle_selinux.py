@@ -15,7 +15,7 @@ import sys
 
 
 selinux_policy  = 'on'
-selinux_taget = 'on'
+selinux_target = 'on'
 
 def run(options={}):
     """main loop for this plugin"""
