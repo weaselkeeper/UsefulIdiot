@@ -12,19 +12,6 @@
 import subprocess
 import os
 import sys
-import selinux
-
-selinux_policy  = 'on'
-selinux_target = 'on'
-if selinux.is_selinux_enabled():
-    try:
-        is_enforce = selinux.security_getenforce()
-    except:
-        print 'error!'
-        sys.exit(1)
-else:
-    print 'selinux disabled on this system, will not be able to toggle setting'
-    sys.exit(1)
 
 def run(options={}):
     """main loop for this plugin"""
@@ -62,12 +49,18 @@ def toggle_selinux(is_enforce):
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
     # First, is SELinux available on this system?
-    if os.path.exists('/selinux/enforcing'):
-        success,message = 0,'SELinux is present and available.'
+    import selinux
+    success, message = 1, 'Operation failed'
+    if selinux.is_selinux_enabled():
+        try:
+            is_enforce = selinux.security_getenforce()
+            print is_enforce
+        except:
+            success,message = 1,'Sorry, SELinux is not available on this host'
+            print success,message
+            sys.exit(1)
     else:
-        success,message = 1,'Sorry, SELinux is not available on this host'
-        print success,message
+        print 'selinux disabled on this system, will not be able to toggle setting'
         sys.exit(1)
-    success,message = run()
     print success,message
 
