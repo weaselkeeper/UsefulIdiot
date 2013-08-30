@@ -12,10 +12,19 @@
 import subprocess
 import os
 import sys
-
+import selinux
 
 selinux_policy  = 'on'
 selinux_target = 'on'
+if selinux.is_selinux_enabled():
+    try:
+        is_enforce = selinux.security_getenforce()
+    except:
+        print 'error!'
+        sys.exit(1)
+else:
+    print 'selinux disabled on this system, will not be able to toggle setting'
+    sys.exit(1)
 
 def run(options={}):
     """main loop for this plugin"""
@@ -31,22 +40,24 @@ def run(options={}):
     success,message = toggle_selinux()
     return success,message
 
-def toggle_selinux():
+def toggle_selinux(is_enforce):
     """you realize this is dangerous, right?"""
     # Use the following command for testing.
     try:
         #toggle enforcing.
-        if return_code == 0:
-            success = 0
-            message = 'selinux policy set to %s' % selinux_target
-        else:
-            success = 1
-            message = 'unable to toggle selinux enforcing due to %s' % err
-        return success,message
+        selinux_target = not is_enforce
+        selinux.security_setenforce(selinux_target)
+        success = 0
+        message = 'selinux policy set to %s' % selinux_target
+
     except Exception as error:
         success = 1
         message = 'unable to toggle selinux enforcing due to %s' % err
         return success,message
+
+
+
+
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
