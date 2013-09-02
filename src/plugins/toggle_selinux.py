@@ -24,7 +24,7 @@ def run(options={}):
             success = 0
             message = 'I would have toggled selinux enforcing %s' % selinux_target
             return success, message
-    success,message = toggle_selinux()
+    success,message = toggle_selinux(is_enforce)
     return success,message
 
 def toggle_selinux(is_enforce):
@@ -39,8 +39,8 @@ def toggle_selinux(is_enforce):
 
     except Exception as error:
         success = 1
-        message = 'unable to toggle selinux enforcing due to %s' % err
-        return success,message
+        message = 'unable to toggle selinux enforcing due to %s' % error
+    return success,message
 
 
 
@@ -54,13 +54,15 @@ if __name__ == "__main__":
     if selinux.is_selinux_enabled():
         try:
             is_enforce = selinux.security_getenforce()
-            print is_enforce
+            #print is_enforce
         except:
             success,message = 1,'Sorry, SELinux is not available on this host'
-            print success,message
+            #print success,message
             sys.exit(1)
     else:
         print 'selinux disabled on this system, will not be able to toggle setting'
         sys.exit(1)
+
+    success,message = toggle_selinux(is_enforce)
     print success,message
 
