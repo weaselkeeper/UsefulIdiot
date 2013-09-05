@@ -9,9 +9,25 @@
 # selinux
 #
 
+DOCUMENTATION = '''                                                             
+---                                                                             
+module: cronripper                                                              
+short_description: delete old files in /tmp                                     
+description:                                                                    
+      - toggles selinux enforcing setting. Permissive/Enforcing
+examples:
+   - code: toggle_selinux
+notes: []
+# informational: requirements for nodes
+requirements: python-selinux
+author: Jim Richardson <weaselkeeper@gmail.com>
+'''      
+
 import subprocess
 import os
 import sys
+import selinux
+
 
 def run(options={}):
     """main loop for this plugin"""
@@ -22,10 +38,23 @@ def run(options={}):
     if 'dryrun' in options:
         if options['dryrun'] == True:
             success = 0
-            message = 'I would have toggled selinux enforcing %s' % selinux_target
+            message = 'I would have toggled selinux enforcing setting'
             return success, message
+
+    # First, is SELinux available on this system?
+    if selinux.is_selinux_enabled():
+        try:
+            is_enforce = selinux.security_getenforce()
+        except:
+            success,message = 1,'Sorry, SELinux is not available on this host'
+            return success,message
+    else:
+        print 'selinux disabled on this system, will not be able to toggle setting'
+        sys.exit(1)
+    
     success,message = toggle_selinux(is_enforce)
     return success,message
+
 
 def toggle_selinux(is_enforce):
     """you realize this is dangerous, right?"""
@@ -43,26 +72,8 @@ def toggle_selinux(is_enforce):
     return success,message
 
 
-
-
-
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    # First, is SELinux available on this system?
-    import selinux
-    success, message = 1, 'Operation failed'
-    if selinux.is_selinux_enabled():
-        try:
-            is_enforce = selinux.security_getenforce()
-            #print is_enforce
-        except:
-            success,message = 1,'Sorry, SELinux is not available on this host'
-            #print success,message
-            sys.exit(1)
-    else:
-        print 'selinux disabled on this system, will not be able to toggle setting'
-        sys.exit(1)
-
-    success,message = toggle_selinux(is_enforce)
+    success,message = run()
     print success,message
 
