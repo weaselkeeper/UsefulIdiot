@@ -44,7 +44,8 @@ def run(options={}):
         if options['dryrun'] == True:
             message = 'I would have uninstalled: %s' % target_package['name']
             return success, message
-
+    
+    # uninstalling does not yet work, need to work on that bit
     success = rpm_uninstall(target_package)
 
     return success, message
