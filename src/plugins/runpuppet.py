@@ -29,20 +29,19 @@ def run(options={}):
             message = 'I would have restarted puppet on this server'
             return success, message
 
-    message=restart_puppet()
+    message = restart_puppet()
 
     return success, message
 
 def restart_puppet():
     """restarting puppet, as root of course."""
     process = subprocess.Popen(['/sbin/service','puppet restart'], stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-    print output
-    return output
+    _message = process.communicate()[0]
+    return _message
 
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message
 

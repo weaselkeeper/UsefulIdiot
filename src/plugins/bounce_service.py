@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-# This only works on sysv init systems for now. 
+# This only works on sysv init systems for now.
 # Look at the contents of /etc/init.d, pick a random one, and see if it's
 # currently running, if it is not, drop it from the list, and make another
 # random pick, repeat until you get a running service. Then restart it, and
@@ -28,8 +28,8 @@ def run(options={}):
         if 'dryrun' in options:
             if options['dryrun'] == True:
                 success = 0
-                message = 'I would have tried to bounce: %s ' $ service
-                return success,message
+                message = 'I would have tried to bounce: %s ' % service
+                return success, message
         try:
             service_status = subprocess.Popen([service,'status'],
                 stdout=subprocess.PIPE).communicate()[0]
@@ -39,9 +39,9 @@ def run(options={}):
             break
         if 'running' in service_status.lower():
             not_running = 0
-    return service,service_status
+    return service, service_status
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message

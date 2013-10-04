@@ -16,10 +16,10 @@ import sys
 try:
     import rpm
 except ImportError:
-        error = """No rpm module avaible, maybe this isn't an rpm system? 
+    error = """No rpm module avaible, maybe this isn't an rpm system? 
 Either install the rpm module, or find some other way"""
-        print error
-        sys.exit(1)
+    print error
+    sys.exit(1)
 
 def run(options={}):
     print options.keys()
@@ -44,7 +44,7 @@ def run(options={}):
         if options['dryrun'] == True:
             message = 'I would have uninstalled: %s' % target_package['name']
             return success, message
-    
+
     # uninstalling does not yet work, need to work on that bit
     success = rpm_uninstall(target_package)
 
@@ -60,6 +60,6 @@ def rpm_uninstall(pkg):
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message
 

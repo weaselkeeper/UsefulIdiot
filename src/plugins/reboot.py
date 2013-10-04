@@ -24,8 +24,8 @@ def run(options={}):
             success = 0
             message = 'I would have rebooted server %s' % hostname
             return success, message
-    success,message = reboot_system()
-    return success,message
+    success, message = reboot_system()
+    return success, message
 
 def reboot_system():
     """you realize this is dangerous, right?"""
@@ -40,15 +40,15 @@ def reboot_system():
             message = 'rebooting server %s' % hostname
         else:
             success = 1
-            message = 'unable to reboot server %s due to %s' % (hostname,err)
-        return success,message
+            message = 'unable to reboot server %s due to %s' % (hostname, err)
+        return success, message
     except Exception as error:
         success = 1
-        message = 'unable to reboot server %s due to %s' % (hostname,error)
-        return success,message
+        message = 'unable to reboot server %s due to %s' % (hostname, error)
+        return success, message
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message
 

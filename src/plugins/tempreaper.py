@@ -38,34 +38,34 @@ import shutil
 def run(options={}):
     """main loop for this plugin"""
 
-    success = 1
-    message = "tempreaper was unable to complete it's run"
+    _success = 1
+    _message = "tempreaper was unable to complete it's run"
     age = 10
     if age in options:
         age = options.age
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have deleted files in /tmp older than %d days' %age
-            return success, message
+            _message = 'I would have deleted files in /tmp older than %d days' % age
+            return _success, _message
 
-    success,message = tmp_reaper(age)
+    _success, _message = tmp_reaper(age)
 
-    return success, message
+    return _success, _message
 
 def tmp_reaper(age):
-    success,message = 1,"tempreaper was unable to complete it's run"
+    _success, _message = 1, "tempreaper was unable to complete it's run"
     for f in os.listdir('/tmp'):
-        tmpfile = os.path.join('/tmp',f)
+        tmpfile = os.path.join('/tmp', f)
         if os.stat(tmpfile).st_mtime < time.time()- ( age * 86400 ):
             try:
                 os.remove(tmpfile)
             except OSError:
                 shutil.rmtree(tmpfile)
-            success, message = 0,"No files left in /tmp older than %d days" % age
-    return success,message
+            _success, _message = 0, "No files left in /tmp older than %d days" % age
+    return _success, _message
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message

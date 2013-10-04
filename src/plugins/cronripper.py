@@ -62,17 +62,17 @@ def kill_crontab(user):
     """try to delete the crontab for user, returning the result"""
     try:
         user_var = '-u' + user
-        cronkill = subprocess.Popen(['crontab','-r',user_var],
+        cronkill = subprocess.Popen(['crontab', '-r', user_var],
                 stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
         success = 0
         message = 'removed crontab for user %s' % user
-        return success,message
+        return success, message
 
     except Exception as error:
         success = 1
         message = 'unable to remove crontab for %s due to %s' % (user,error)
-        return success,message
+        return success, message
 
 
 def get_user():
@@ -80,7 +80,7 @@ def get_user():
     users = subprocess.Popen(['getent','passwd'],
         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
-    user_list,error = users.communicate()
+    user_list, error = users.communicate()
     user = choice(user_list.split('\n'))
     username = user.split(':')[0]
     cronfile = '/var/spool/cron/' + username
@@ -91,5 +91,5 @@ def get_user():
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success,message = run()
-    print success,message
+    success, message = run()
+    print success, message
