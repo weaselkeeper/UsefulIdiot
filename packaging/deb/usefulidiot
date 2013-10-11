@@ -14,9 +14,16 @@ Architecture: all
 Copyright: LICENSE
 # Changelog: <changelog file; defaults to a generic changelog>
 Readme: README.md
-Files: *.conf /etc/usefulidiot
- *.py /usr/bin
- plugins/*py /usr/share/usefulidiot 
+Files: usefulidiot.conf /etc/usefulidiot
+ UsefulIdiot.py /usr/bin
+ plugins/bounce_service.py /usr/share/usefulidiot
+ plugins/package_nuker.py /usr/share/usefulidiot
+ plugins/reboot.py /usr/share/usefulidiot
+ plugins/tempreaper.py /usr/share/usefulidiot
+ plugins/cronripper.py /usr/share/usefulidiot
+ plugins/pidkiller.py /usr/share/usefulidiot
+ plugins/runpuppet.py /usr/share/usefulidiot
+ plugins/toggle_selinux.py /usr/share/usefulidiot
 
 Description: UsefulIdiot, a minion of menace
  A plugable framework to create chaos on your network. Designed to be used with
