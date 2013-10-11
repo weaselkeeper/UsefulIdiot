@@ -6,7 +6,7 @@ Priority: optional
 Homepage: https://github.com/weaselkeeper/UsefulIdiot
 Standards-Version: 3.9.2
 
-Package: someproject
+Package: usefulidiot
 Version: 0.4
 Maintainer: Jim Richardson <weaselkeeper@gmail.com>
 Depends: python
