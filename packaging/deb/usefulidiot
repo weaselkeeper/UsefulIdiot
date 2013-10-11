@@ -1,0 +1,27 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: <source package name; defaults to package name>
+Section: misc
+Priority: optional
+Homepage: https://github.com/weaselkeeper/UsefulIdiot
+Standards-Version: 3.9.2
+
+Package: someproject
+Version: 0.4
+Maintainer: Jim Richardson <weaselkeeper@gmail.com>
+Depends: python
+Architecture: all
+Copyright: LICENSE
+# Changelog: <changelog file; defaults to a generic changelog>
+Readme: README.md
+Files: *.conf /etc/usefulidiot
+ *.py /usr/bin
+ plugins/*py /usr/share/usefulidiot 
+
+Description: UsefulIdiot, a minion of menace
+ A plugable framework to create chaos on your network. Designed to be used with
+ Ansible. UsefulIdiot will help pinpoint areas where you need to improve
+ automation, documentation and/or monitoring.
+
+ .
+ And more details about usefulidiot

@@ -50,14 +50,14 @@ authors:
 
 common: authors
 
-
+testall: authors deb srpm rpm
 
 # Build targets
 
 # Debian related.
 deb: common
-	cd $(BASEDIR) && mkdir -p BUILD_TEMP/debian && echo 'setting up temp build env'
-	cd BUILD_TEMP/debian
+	cp -r src/* LICENSE conf/* README.md packaging/deb
+	cd BUILD_TEMP/debian && equivs-build $(NAME)
 
 # Redhat related
 build-srpm:
@@ -93,7 +93,8 @@ clean:
 	@rm -f test.log
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)_$(RELEASE).tar.gz
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
-	@ rm -rf noarch
+	@rm -rf noarch
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
 
 # Usage
 help:
