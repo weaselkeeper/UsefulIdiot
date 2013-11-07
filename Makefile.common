@@ -64,6 +64,7 @@ sources: spec
 	mkdir -p $(SOURCEDIR)
 	mkdir -p $(WORKDIR)
 	/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
+	@rm -rf $(NAME)
 
 srpm: sources build-srpm
 

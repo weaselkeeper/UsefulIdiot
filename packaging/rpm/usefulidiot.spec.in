@@ -27,17 +27,17 @@ automation, documentation and/or monitoring.
 rm -rf %{buildroot}
 
 %{__mkdir_p} %{buildroot}%{_bindir}
-%{__mkdir_p} %{buildroot}%{_sysconfdir}/usefulidiot
-%{__mkdir_p} %{buildroot}%{_datadir}/usefulidiot/plugins
-%{__mkdir_p} %{buildroot}%{_localstatedir}/log/usefulidiot
-cp -r ./plugins/*.py %{buildroot}%{_datadir}/usefulidiot/plugins/
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/%{name}
+%{__mkdir_p} %{buildroot}%{_datadir}/%{name}/plugins
+%{__mkdir_p} %{buildroot}%{_localstatedir}/log/%{name}
+cp -r ./plugins/*.py %{buildroot}%{_datadir}/%{name}/plugins/
 cp -r ./UsefulIdiot.py %{buildroot}%{_bindir}/
-cp -r ./config/* %{buildroot}%{_sysconfdir}/usefulidiot
+cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
 
 %files
 %{_bindir}/UsefulIdiot.py
-%{_sysconfdir}/usefulidiot/*
-%{_datadir}/usefulidiot/*
+%{_sysconfdir}/%{name}/*
+%{_datadir}/%{name}/*
 
 %pre
 
