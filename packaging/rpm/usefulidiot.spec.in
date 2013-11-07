@@ -1,5 +1,6 @@
 Name:           usefulidiot
-Version:        %(git describe | sed -e 's/-/_/g')
+Version:        VERSION
+
 Release:        0
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3

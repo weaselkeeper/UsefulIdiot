@@ -1,0 +1,93 @@
+# Makefile pulls info from git, will need tweeks if run from non-git repo.
+VERSION=$(shell git describe | sed -e 's/-/_/g')
+RELEASE=0
+SHELL := /bin/bash
+SPECFILE = $(firstword $(wildcard *.spec))
+WORKDIR := $(shell pwd)/work
+SRCRPMDIR ?= $(shell pwd)
+SPECFILE = packaging/rpm/$(NAME).spec
+
+DEBFULLNAME=$(shell git config --get user.name)
+DEBMAIL=$(shell git config --get user.email)
+SOURCE_URL=$(shell git config --get remote.origin.url)
+BASEDIR := $(shell git rev-parse --show-toplevel)
+
+BUILDDIR ?= $(WORKDIR)
+RPM ?= $(shell which rpmbuild)
+RPMDIR ?= $(shell pwd)
+SOURCEDIR := $(shell pwd)
+TAR := /bin/tar
+RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
+		--define "_builddir $(BUILDDIR)" \
+		--define "_srcrpmdir $(SRCRPMDIR)" \
+		--define "_rpmdir $(RPMDIR)" \
+
+TARSRC = $(NAME)-$(VERSION)
+
+#TODO: this should probably be a tag rather than just the latest commit.
+#TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
+
+###########
+## Some setup
+
+authors:
+	sh packaging/authors.sh
+
+common: authors
+
+testall: authors deb srpm rpm
+
+# Build targets
+
+# Debian related.
+deb: common
+	cp src/* LICENSE config/* README.md packaging/deb
+	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
+
+# Redhat related
+spec:
+	m4 -DVERSION=$(VERSION)  packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
+
+
+build-srpm: spec
+	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
+
+build-rpm: spec
+	$(RPM) -bb $(RPM_DEFINES) $(SPECFILE)
+
+all: srpm
+
+sources: spec
+	mkdir $(NAME)
+	cp -r src/* $(NAME)
+	cp -r config/* $(NAME)
+	mkdir -p $(SOURCEDIR)
+	mkdir -p $(WORKDIR)
+	/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
+
+srpm: sources build-srpm
+
+rpm: sources build-rpm
+
+
+# Cleanup
+clean:
+	@echo "cleaning up "
+	@/bin/rm -rf $(WORKDIR) building $(NAME)
+	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)-$(VERSION)*rpm* $(NAME)-$(VERSION)*deb*
+	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
+	@rm -rf noarch
+	@rm -f packaging/rpm/$(NAME).spec
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
+
+# Usage
+help:
+	@echo 'Makefile for $(NAME), currently supports deb and rpm '
+	@echo ' builds from current source tree.'
+	@echo "Usage: make <target>"
+	@echo "Available targets are:"
+	@echo "	deb			Create deb"
+	@echo "	sources			Create tarball"
+	@echo "	srpm			Create srpm"
+	@echo "	rpm			Create rpm"
+	@echo "	clean			Remove work dir"
