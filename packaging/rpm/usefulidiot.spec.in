@@ -35,7 +35,7 @@ cp -r ./UsefulIdiot.py %{buildroot}%{_bindir}/
 cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
 
 %files
-%{_bindir}/UsefulIdiot.py
+%{_bindir}/*.py*
 %{_sysconfdir}/%{name}/*
 %{_datadir}/%{name}/*
 
