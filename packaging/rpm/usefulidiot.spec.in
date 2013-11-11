@@ -1,7 +1,7 @@
 Name:           usefulidiot
 Version:        VERSION
 
-Release:        0
+Release:        RELEASE
 Summary:        A python re-implimentation of Netflix's Simian Army
 License:        GPLv3
 URL:            https://github.com/weaselkeeper/UsefulIdiot
@@ -47,11 +47,4 @@ cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
 rm -rf %{buildroot}
 
 %changelog
-* Fri Jul 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.4
-- Rewrite of build Makefile.
-* Sat Jul 06 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.3
-- Added runpuppet plugin, plus numerous changes to __main__ Also added config reading.
-* Wed Jun 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
-- Added a couple plugins, cronripper,runpuppet, and reboot
-* Thu Jan 10 2013 David Wahlstrom <dwahlstrom@classmates.com> - 0.1-1
-- initial packaging of UsefulIdiot
+CHANGELOG

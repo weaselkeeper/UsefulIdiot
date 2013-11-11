@@ -46,8 +46,10 @@ deb: common
 
 # Redhat related
 spec:
-	m4 -DVERSION=$(VERSION)  packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
-
+	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) -DCHANGELOG=$(CHANGELOG) $(SPECFILE).in > $(SPECFILE)
+	git log --simplify-by-decoration \
+	--format="* %cd %aN - %h %n %s%d%n" \
+	--date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $(SPECFILE)
 
 build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
