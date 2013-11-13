@@ -82,6 +82,7 @@ clean:
 	@rm -rf noarch
 	@rm -f packaging/rpm/$(NAME).spec
 	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
+	@rm -rf packaging/deb/plugins
 
 # Usage
 help:
