@@ -41,7 +41,7 @@ testall: authors deb srpm rpm
 
 # Debian related.
 deb: common
-	cp src/* LICENSE config/* README.md packaging/deb
+	cp  -r src/* LICENSE config/* README.md packaging/deb
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
