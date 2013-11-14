@@ -1,31 +1,44 @@
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
-VERSION=$(shell git describe | sed -e 's/-/_/g')
-RELEASE=0
+# But since I only use git, someone else can make the changes for other SCM 
+# systems.
+VERSION = $(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
+RELEASE = $(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
+DEBVERSION = $(shell git describe | cut -f1 -d-)
+DEBRELEASE = $(shell git describe | cut -f2- -d- ) 
+# If RELEASE and VERSION are equal, it means we are on a tag, set
+# RELEASE to 0. If not, we are off a tag, and the above shell snippet returns
+# a good release name
+ifeq ($(RELEASE),$(VERSION))
+	RELEASE=0
+endif
+
+#Command utilities
 SHELL := /bin/bash
-SPECFILE = $(firstword $(wildcard *.spec))
+TAR := /bin/tar
+RPM ?= $(shell which rpmbuild)
+
+#General variables.
 WORKDIR := $(shell pwd)/work
+FULLNAME=$(shell git config --get user.name)
+EMAIL=$(shell git config --get user.email)
+SOURCE_URL=$(shell git config --get remote.origin.url)
+BASEDIR := $(shell git rev-parse --show-toplevel)
+TARSRC = $(NAME)-$(VERSION)
+
+# RPM Specific variables
+BUILDDIR ?= $(WORKDIR)
+RPMDIR ?= $(shell pwd)
+SOURCEDIR := $(shell pwd)
 SRCRPMDIR ?= $(shell pwd)
 SPECFILE = packaging/rpm/$(NAME).spec
 
-DEBFULLNAME=$(shell git config --get user.name)
-DEBMAIL=$(shell git config --get user.email)
-SOURCE_URL=$(shell git config --get remote.origin.url)
-BASEDIR := $(shell git rev-parse --show-toplevel)
-
-BUILDDIR ?= $(WORKDIR)
-RPM ?= $(shell which rpmbuild)
-RPMDIR ?= $(shell pwd)
-SOURCEDIR := $(shell pwd)
-TAR := /bin/tar
 RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
 		--define "_builddir $(BUILDDIR)" \
 		--define "_srcrpmdir $(SRCRPMDIR)" \
 		--define "_rpmdir $(RPMDIR)" \
 
-TARSRC = $(NAME)-$(VERSION)
-
-#TODO: this should probably be a tag rather than just the latest commit.
-#TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
+#Deb specific variables
+DEBFILE = packaging/deb/$(NAME)
 
 ###########
 ## Some setup
@@ -41,7 +54,8 @@ testall: authors deb srpm rpm
 
 # Debian related.
 deb: common
-	cp  -r src/* LICENSE config/* README.md packaging/deb
+	cp -r src/* LICENSE config/* README.md packaging/deb
+	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
@@ -81,7 +95,7 @@ clean:
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f packaging/rpm/$(NAME).spec
-	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb packaging/deb/$(NAME)
 	@rm -rf packaging/deb/plugins
 
 # Usage
@@ -95,3 +109,4 @@ help:
 	@echo "	srpm			Create srpm"
 	@echo "	rpm			Create rpm"
 	@echo "	clean			Remove work dir"
+	@echo "	testall			Build all the things"
