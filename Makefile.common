@@ -1,16 +1,28 @@
+SHELL := /bin/bash
+SPECFILE = $(firstword $(wildcard *.spec))
+WORKDIR := $(shell pwd)/work
+SRCRPMDIR ?= $(shell pwd)
+SPECFILE = packaging/rpm/$(NAME).spec
+
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
 # But since I only use git, someone else can make the changes for other SCM 
 # systems.
 VERSION = $(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
 RELEASE = $(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
 DEBVERSION = $(shell git describe | cut -f1 -d-)
-DEBRELEASE = $(shell git describe | cut -f2- -d- ) 
+DEBRELEASE = $(shell git describe | cut -f2- -d- )
 # If RELEASE and VERSION are equal, it means we are on a tag, set
 # RELEASE to 0. If not, we are off a tag, and the above shell snippet returns
 # a good release name
 ifeq ($(RELEASE),$(VERSION))
 	RELEASE=0
 endif
+# And same for DEBRELEASE
+ifeq ($(DEBRELEASE),$(DEBVERSION))
+	DEBRELEASE=0
+endif
+
+
 
 #Command utilities
 SHELL := /bin/bash
@@ -55,7 +67,7 @@ testall: authors deb srpm rpm
 # Debian related.
 deb: common
 	cp -r src/* LICENSE config/* README.md packaging/deb
-	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) $(DEBFILE).in > $(DEBFILE)
+	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) -DFULLNAME="$(FULLNAME)" -DEMAIL=$(EMAIL) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
