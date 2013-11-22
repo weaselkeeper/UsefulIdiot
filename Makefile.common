@@ -1,8 +1,4 @@
 SHELL := /bin/bash
-SPECFILE = $(firstword $(wildcard *.spec))
-WORKDIR := $(shell pwd)/work
-SRCRPMDIR ?= $(shell pwd)
-SPECFILE = packaging/rpm/$(NAME).spec
 
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
 # But since I only use git, someone else can make the changes for other SCM 
@@ -21,8 +17,6 @@ endif
 ifeq ($(DEBRELEASE),$(DEBVERSION))
 	DEBRELEASE=0
 endif
-
-
 
 #Command utilities
 SHELL := /bin/bash
