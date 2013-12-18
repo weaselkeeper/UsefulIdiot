@@ -103,6 +103,7 @@ class ConfigFile(object):
                   section, hard_fail))
 
         def do_fail(err):
+            """ do something with a caught error """
             log.debug('in ConfigFile().get_item().do_fail(%s)' % err)
             if hard_fail:
                 log.error(err)
@@ -164,20 +165,20 @@ if __name__ == "__main__":
         log.setLevel(logging.DEBUG)
 
     options = {}
-    """Note, this refers to the ansible options list above, not all the options
-    handed to UsefulIdiot via the command line """
+    # Note, this refers to the ansible options list above, not all the options
+    # handed to UsefulIdiot via the command line
     tmp_options = args.options
     if tmp_options:
         for pair in tmp_options.split(','):
             key = pair.split('=')[0]
             value = pair.split('=')[1]
             options[key] = value
-        """ Now we add the dry-run option to the end, if set, to simplify the
-        calling process for the plugin"""
+        # Now we add the dry-run option to the end, if set, to simplify the
+        # calling process for the plugin
         if args.dryrun:
             options['dryrun'] = args.dryrun
     else:
-        """need to add dryrun here, if no ansible options were passed"""
+        # need to add dryrun here, if no ansible options were passed
         options = {}
         if args.dryrun:
             options['dryrun'] = args.dryrun
