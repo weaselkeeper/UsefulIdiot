@@ -1,13 +1,13 @@
 #!/usr/bin/env python
+"""
+ Toggle selinux enforcement, if on, set off, if off, set on.
+ plugin options:
 
-# Toggle selinux enforcement, if on, set off, if off, set on.
-# plugin options:
-#
-# [dryrun]
-# default: False
-# If True, only print what would have beeen done, but do not actually toggle
-# selinux
-#
+ [dryrun]
+ default: False
+ If True, only print what would have beeen done, but do not actually toggle
+ selinux
+"""
 
 DOCUMENTATION = '''
 ---
