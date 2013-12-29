@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" bounce a (random) service """
 
 # This only works on sysv init systems for now.
 # Look at the contents of /etc/init.d, pick a random one, and see if it's
@@ -20,6 +20,7 @@ from random import shuffle
 
 
 def run(options={}):
+    """ run the command  handed us"""
     not_running = 1
     s_list = os.listdir('/etc/init.d')
     while not_running:
@@ -43,5 +44,5 @@ def run(options={}):
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success, message = run()
-    print success, message
+    _success, _message = run()
+    print _success, _message
