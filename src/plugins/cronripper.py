@@ -41,22 +41,22 @@ import os
 def run(options={}):
     """main loop for this plugin"""
 
-    success = 1
-    message = "cronripper did not complete it's run"
+    _success = 1
+    _message = "cronripper did not complete it's run"
 
     # this is the user whose cron we will kill
     target_user = get_user()
-    message = "cronripper was unable to remove crontab for user %s " % target_user
+    _message = "cronripper was unable to remove crontab for user %s " % target_user
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have decronned: %s ' % target_user
-            return success, message
+            _message = 'I would have decronned: %s ' % target_user
+            return _success, _message
 
-    success = kill_crontab(target_user)
-    message = "User %s is now cron free!" % target_user
+    _success = kill_crontab(target_user)
+    _message = "User %s is now cron free!" % target_user
 
-    return success, message
+    return _success, _message
 
 def kill_crontab(user):
     """try to delete the crontab for user, returning the result"""
@@ -65,14 +65,14 @@ def kill_crontab(user):
         cronkill = subprocess.Popen(['crontab', '-r', user_var],
                 stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
-        success = 0
-        message = 'removed crontab for user %s' % user
-        return success, message
+        _success = 0
+        _message = 'removed crontab for user %s' % user
+        return _success, _message
 
     except Exception as error:
-        success = 1
-        message = 'unable to remove crontab for %s due to %s' % (user,error)
-        return success, message
+        _success = 1
+        _message = 'unable to remove crontab for %s due to %s' % (user, error)
+        return _success, _message
 
 
 def get_user():
