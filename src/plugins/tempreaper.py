@@ -1,14 +1,12 @@
 #!/usr/bin/env python
+"""
+ plugin options:
 
-# plugin options:
-#
-# [dryrun]
-# default: False
-# If True, only print what would have beeen done, but do not actually reap /tmp
-# of old files
-#
-
-
+ [dryrun]
+ default: False
+ If True, only print what would have beeen done, but do not actually reap /tmp
+ of old files
+"""
 DOCUMENTATION = '''
 ---
 module: cronripper
@@ -46,7 +44,7 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            _message = 'I would have deleted files in /tmp older than %d days' % age
+            _message = 'files in /tmp older than %d days deleted' % age
             return _success, _message
 
     _success, _message = tmp_reaper(age)
@@ -54,6 +52,7 @@ def run(options={}):
     return _success, _message
 
 def tmp_reaper(age):
+    """ Main function, do what you do """
     _success, _message = 1, "tempreaper was unable to complete it's run"
     for f in os.listdir('/tmp'):
         tmpfile = os.path.join('/tmp', f)
@@ -62,10 +61,11 @@ def tmp_reaper(age):
                 os.remove(tmpfile)
             except OSError:
                 shutil.rmtree(tmpfile)
-            _success, _message = 0, "No files left in /tmp older than %d days" % age
+            _success = 0
+            _message = "No files left in /tmp older than %d days" % age
     return _success, _message
 
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    # This is where we will begin when called from CLI
     success, message = run()
     print success, message
