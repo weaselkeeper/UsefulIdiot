@@ -27,18 +27,20 @@ def run(options={}):
         shuffle(s_list)
         service = '/etc/init.d/' + s_list.pop()
         if 'dryrun' in options:
-            if options['dryrun'] == True:
+            if options['dryrun']:
                 success = 0
                 message = 'I would have tried to bounce: %s ' % service
                 return success, message
         try:
-            service_status = subprocess.Popen([service,'status'],
+            service_status = subprocess.Popen([service, 'status'],
                 stdout=subprocess.PIPE).communicate()[0]
         except:
             OSError
             # try again
             break
         if 'running' in service_status.lower():
+            service_status = subprocess.Popen([service, 'restart'],
+                stdout=subprocess.PIPE).communicate()[0]
             not_running = 0
     return service, service_status
 
