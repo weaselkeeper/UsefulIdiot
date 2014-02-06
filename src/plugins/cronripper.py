@@ -8,29 +8,29 @@
 # the selected user's cron
 #
 
-DOCUMENTATION = '''                                                            g
----                                                                            g
-module: cronripper                                                             g
-short_description: delet user's crontab                                        g
-description:                                                                   g
-     - Delete's a (random) user's crontab                                      g
-options:                                                                       g
-  user:                                                                        g
-    description:                                                               g
-      - which user shall lose their crontab? random means pick any crontab in  g
-        /var/spool/cron                                                        g
-    required: false                                                            g
-    default: 'random'                                                          g
-    aliases: []                                                                g
-                                                                               g
-examples:                                                                      g
-   - code: cronripper name='jgomez'                                            g
-   - code: cronripper name='random'                                            g
-   - code: cronripper                                                          g
-notes: []                                                                      g
-# informational: requirements for nodes                                        g
-requirements: [ crontab, ]                                                     g
-author: Jim Richardson <weaselkeeper@gmail.com>                                g
+DOCUMENTATION = '''
+---
+module: cronripper
+short_description: delet user's crontab
+description:
+     - Delete's a (random) user's crontab
+options:
+  user:
+    description:
+      - which user shall lose their crontab? random means pick any crontab in
+        /var/spool/cron
+    required: false
+    default: 'random'
+    aliases: []
+
+examples:
+   - code: cronripper name='jgomez'
+   - code: cronripper name='random'
+   - code: cronripper
+notes: []
+# informational: requirements for nodes
+requirements: [ crontab, ]
+author: Jim Richardson <weaselkeeper@gmail.com>
 '''
 
 import subprocess
@@ -46,10 +46,10 @@ def run(options={}):
 
     # this is the user whose cron we will kill
     target_user = get_user()
-    _message = "cronripper was unable to remove crontab for user %s " % target_user
+    _message = "unable to remove crontab for user %s " % target_user
 
     if 'dryrun' in options:
-        if options['dryrun'] == True:
+        if options['dryrun']:
             _message = 'I would have decronned: %s ' % target_user
             return _success, _message
 
@@ -57,6 +57,7 @@ def run(options={}):
     _message = "User %s is now cron free!" % target_user
 
     return _success, _message
+
 
 def kill_crontab(user):
     """try to delete the crontab for user, returning the result"""
@@ -77,7 +78,7 @@ def kill_crontab(user):
 
 def get_user():
     """get list of valid users with crontabs"""
-    users = subprocess.Popen(['getent','passwd'],
+    users = subprocess.Popen(['getent', 'passwd'],
         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
     user_list, error = users.communicate()
