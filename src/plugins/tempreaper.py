@@ -13,25 +13,26 @@ module: cronripper
 short_description: delete old files in /tmp
 description:
      - Deletes all files in /tmp older than N days (default 10)
-options:                                                                       g
+options:
   age:
-    description:                                                               g
+    description:
       - Files in /tmp older than <age> days will be deleted. Default 10
     required: false
     default: '10'
-    aliases: []                                                                g
-                                                                               g
-examples:                                                                      g
+    aliases: []
+
+examples:
    - code: tempreaper age=1
-notes: []                                                                      g
-# informational: requirements for nodes                                        g
+notes: []
+# informational: requirements for nodes
 requirements: [ bash, ]
-author: Jim Richardson <weaselkeeper@gmail.com>                                g
+author: Jim Richardson <weaselkeeper@gmail.com>
 '''
 
 import os
 import time
 import shutil
+
 
 def run(options={}):
     """main loop for this plugin"""
@@ -43,7 +44,7 @@ def run(options={}):
         age = options.age
 
     if 'dryrun' in options:
-        if options['dryrun'] == True:
+        if options['dryrun']:
             _message = 'files in /tmp older than %d days deleted' % age
             return _success, _message
 
@@ -51,12 +52,13 @@ def run(options={}):
 
     return _success, _message
 
+
 def tmp_reaper(age):
     """ Main function, do what you do """
     _success, _message = 1, "tempreaper was unable to complete it's run"
-    for f in os.listdir('/tmp'):
-        tmpfile = os.path.join('/tmp', f)
-        if os.stat(tmpfile).st_mtime < time.time()- ( age * 86400 ):
+    for _file in os.listdir('/tmp'):
+        tmpfile = os.path.join('/tmp', _file)
+        if os.stat(tmpfile).st_mtime < time.time()-(age * 86400):
             try:
                 os.remove(tmpfile)
             except OSError:
