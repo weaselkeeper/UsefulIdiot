@@ -53,8 +53,7 @@ def run(options={}):
             _message = 'I would have decronned: %s ' % target_user
             return _success, _message
 
-    _success = kill_crontab(target_user)
-    _message = "User %s is now cron free!" % target_user
+    _success,_message = kill_crontab(target_user)
 
     return _success, _message
 
@@ -66,9 +65,10 @@ def kill_crontab(user):
         cronkill = subprocess.Popen(['crontab', '-r', user_var],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
-        if out:
+        rc = cronkill.poll()
+        if rc:
             #Something went wrong, return not 0
-            _success = out
+            _success = rc
             _message = err
         else:
             _success = 0
