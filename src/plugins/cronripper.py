@@ -1,13 +1,4 @@
 #!/usr/bin/env python
-
-# plugin options:
-#
-# [dryrun]
-# default: False
-# If True, only print what would have beeen done, but do not actually delete
-# the selected user's cron
-#
-
 DOCUMENTATION = '''
 ---
 module: cronripper
@@ -32,6 +23,15 @@ notes: []
 requirements: [ crontab, ]
 author: Jim Richardson <weaselkeeper@gmail.com>
 '''
+
+# plugin options:
+#
+# [dryrun]
+# default: False
+# If True, only print what would have beeen done, but do not actually delete
+# the selected user's cron
+#
+
 
 import subprocess
 from random import choice
@@ -64,10 +64,15 @@ def kill_crontab(user):
     try:
         user_var = '-u' + user
         cronkill = subprocess.Popen(['crontab', '-r', user_var],
-                stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
-        _success = 0
-        _message = 'removed crontab for user %s' % user
+        if out:
+            #Something went wrong, return not 0
+            _success = out
+            _message = err
+        else:
+            _success = 0
+            _message = 'removed crontab for user %s' % user
         return _success, _message
 
     except Exception as error:
@@ -79,7 +84,7 @@ def kill_crontab(user):
 def get_user():
     """get list of valid users with crontabs"""
     users = subprocess.Popen(['getent', 'passwd'],
-        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     user_list, error = users.communicate()
     user = choice(user_list.split('\n'))
