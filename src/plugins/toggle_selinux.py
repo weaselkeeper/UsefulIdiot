@@ -43,10 +43,10 @@ def run(options={}):
         try:
             is_enforce = selinux.security_getenforce()
         except:
-            _success, _message = 1,'Sorry, SELinux is not available on this host'
+            _success, _message = 1, 'SELinux is not available on this host'
             return _success, _message
     else:
-        print 'selinux disabled on this system, will not be able to toggle setting'
+        print 'selinux disabled, will not be able to toggle setting'
         sys.exit(1)
 
     _success, _message = toggle_selinux(is_enforce)

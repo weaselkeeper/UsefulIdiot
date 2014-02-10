@@ -33,7 +33,7 @@ def run(options={}):
 
 def restart_puppet():
     """restarting puppet, as root of course."""
-    process = subprocess.Popen(['/sbin/service','puppet restart'], 
+    process = subprocess.Popen(['/sbin/service', 'puppet restart'],
             stdout=subprocess.PIPE)
     _message = process.communicate()[0]
     return _message
