@@ -42,7 +42,7 @@ def run(options={}):
             service_status = subprocess.Popen([service, 'restart'],
                 stdout=subprocess.PIPE).communicate()[0]
             not_running = 0
-    return service, service_status
+    return 0, service_status
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
