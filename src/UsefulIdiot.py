@@ -31,7 +31,7 @@ import os
 import sys
 import logging
 
-#used in ConfigFile()
+# used in ConfigFile()
 import ConfigParser
 
 logging.basicConfig(level=logging.WARN,
@@ -65,7 +65,7 @@ class UsefulIdiot(object):
         self.status, self.message = self.module.run(self.options)
 
     def get_run_status(self):
-        """Retrieve the return status/message of the module that was executed"""
+        """Retrieve the return status/msg of the module that was executed"""
         log.debug('in UsefulIdiot().get_run_status()')
 
         final_status = {}
@@ -133,13 +133,13 @@ if __name__ == "__main__":
     from random import choice
 
     cmd_parser = argparse.ArgumentParser(
-        description = 'Command a useful idiot to do something to your server.')
+        description='Command a useful idiot to do something to your server.')
     cmd_parser.add_argument(
-        '-n', '--dry-run', dest = 'dryrun', action = 'store_true',
-        help = 'Dry run, do not actually perform action', default = False)
+        '-n', '--dry-run', dest='dryrun', action='store_true',
+        help='Dry run, do not actually perform action', default=False)
     cmd_parser.add_argument(
-        '-l', '--list_plugins', dest = 'list_plugins', action = 'store_true',
-        help = 'List available plugins', default = False)
+        '-l', '--list_plugins', dest='list_plugins', action='store_true',
+        help='List available plugins', default=False)
     cmd_parser.add_argument('-d', '--debug', dest='debug',
         action='store_true', help='Enable debugging during execution.',
         default=None)
