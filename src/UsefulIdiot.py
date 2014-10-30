@@ -123,7 +123,7 @@ class ConfigFile(object):
         return item
 
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    # This is where we will begin when called from CLI
 
     import argparse
     try:
