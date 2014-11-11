@@ -13,5 +13,6 @@ cronripper:	Deletes the crontab of a valid, random user. All crontabs should be 
 package_nuker:	Uninstall a random package (currently not very functional)
 reboot:		Reboots the server.  Your clusters are HA, right?
 runpuppet:	Forces a puppet run.  Hope you didn't make any changes and not update puppet
+runchef:	Forces a chef run.  Hope you didn't make any changes and not update chef
 tempreaper:	Removes files in /tmp.  Were they important?
-toggle_selinux:	(En/Dis)able SELinux.  Puppet should set that right, right?
+toggle_selinux:	(En/Dis)able SELinux.  Puppet/chef/etc should set that right, right?
