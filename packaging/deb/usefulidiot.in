@@ -23,6 +23,7 @@ Files: usefulidiot.conf /etc/usefulidiot
  plugins/cronripper.py /usr/share/usefulidiot
  plugins/pidkiller.py /usr/share/usefulidiot
  plugins/runpuppet.py /usr/share/usefulidiot
+ plugins/runchef.py /usr/share/usefulidiot
  plugins/toggle_selinux.py /usr/share/usefulidiot
 
 Description: UsefulIdiot, a minion of menace
