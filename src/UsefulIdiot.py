@@ -49,7 +49,7 @@ class UsefulIdiot(object):
 
     def __init__(self, plugin, path, options={}):
         """Initialize the idiot"""
-        log.debug('in UsefulIdiot().__init__(self, %s, %s)' % (plugin, path))
+        log.debug('in UsefulIdiot().__init__(self, %s, %s)', plugin, path)
 
         import imp
 
@@ -84,14 +84,14 @@ class ConfigFile(object):
 
     def __init__(self, filename):
         """Initialize ConfigFile object"""
-        log.debug('in ConfigFile().init(self, %s)' % filename)
+        log.debug('in ConfigFile().init(self, %s)', filename)
 
         self.filename = filename
         self.configparser = self.get_config(filename)
 
     def get_config(self, myfile):
         """Load config file for parsing"""
-        log.debug('in ConfigFile().get_config(self, %s)' % myfile)
+        log.debug('in ConfigFile().get_config(self, %s)', myfile)
         config = ConfigParser.ConfigParser()
         config.read(myfile)
         log.debug('returning config: %s' % config)
