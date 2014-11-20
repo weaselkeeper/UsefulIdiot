@@ -94,17 +94,17 @@ class ConfigFile(object):
         log.debug('in ConfigFile().get_config(self, %s)', myfile)
         config = ConfigParser.ConfigParser()
         config.read(myfile)
-        log.debug('returning config: %s' % config)
+        log.debug('returning config: %s', config)
         return config
 
     def get_item(self, cfgitem, section='default', hard_fail=False):
         """Retrieve value for requested key from the config file"""
-        log.debug('in ConfigFile().get_item(self, %s, %s, %s)' % (cfgitem,
-                  section, hard_fail))
+        log.debug('in ConfigFile().get_item(self, %s, %s, %s)', cfgitem,
+                section, hard_fail)
 
         def do_fail(err):
             """ do something with a caught error """
-            log.debug('in ConfigFile().get_item().do_fail(%s)' % err)
+            log.debug('in ConfigFile().get_item().do_fail(%s)', err)
             if hard_fail:
                 log.error(err)
                 sys.exit(-1)
@@ -187,14 +187,14 @@ if __name__ == "__main__":
     if args.config_override:
         configfile = args.config_override
         log.debug('config file location overriden on invocation, attempting \
-            to use %s as config file source' % configfile)
+            to use %s as config file source', configfile)
     elif os.path.isfile(configfile):
-        log.debug('reading config from: %s' % configfile)
+        log.debug('reading config from: %s', configfile)
     elif os.path.isfile('../config/usefulidiot.conf'):
         log.debug('reading config from: ../config/usefulidiot.conf')
         configfile = '../config/usefulidiot.conf'
     else:
-        log.debug('unable to read config file: %s' % configfile)
+        log.debug('unable to read config file: %s', configfile)
         sys.exit(1)
     cfg = ConfigFile(configfile)
 
