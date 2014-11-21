@@ -119,7 +119,7 @@ class ConfigFile(object):
         except ConfigParser.NoSectionError, e:
             do_fail(e)
 
-        log.debug('returning item: %s' % item)
+        log.debug('returning item: %s', item)
         return item
 
 if __name__ == "__main__":
@@ -204,7 +204,7 @@ if __name__ == "__main__":
         log.debug('checking plugin override')
         if args.plugin_override:
             plugins.append(args.plugin_override)
-            log.debug('overriding plugins to: %s' % plugins)
+            log.debug('overriding plugins to: %s', plugins)
         else:
             log.debug('no plugin override detected')
             raise NameError
@@ -212,7 +212,7 @@ if __name__ == "__main__":
         plugins = cfg.get_item('plugins').split(',')
         log.debug('plugins override not found, pulling from config file: %s'
                   % plugins)
-    log.debug('found plugin(s) to use: %s' % plugins)
+    log.debug('found plugin(s) to use: %s', plugins)
     if args.list_plugins:
         print 'available plugins are:'
         for element in plugins:
@@ -223,16 +223,16 @@ if __name__ == "__main__":
         log.debug('no plugins found')
         print 'ERROR: No plugins found. Exiting.'
         sys.exit(1)
-    log.debug('found plugin(s): %s' % plugins)
+    log.debug('found plugin(s): %s', plugins)
     loaded_plugin = choice(plugins)
-    log.debug('randomly selected plugin: %s' % loaded_plugin)
+    log.debug('randomly selected plugin: %s', loaded_plugin)
 
     log.debug('detecting plugin(s) directory...')
     try:
         log.debug('checking plugin_dir override')
         if args.plugin_dir_override:
             plugin_dir = args.plugin_dir_override
-            log.debug('overriding plugin_dir to: %s' % plugin_dir)
+            log.debug('overriding plugin_dir to: %s', plugin_dir)
         else:
             raise NameError
     except NameError:
@@ -241,18 +241,18 @@ if __name__ == "__main__":
         if not plugin_dir:
             log.debug('plugin_dir not found in config file')
             plugin_dir = '/usr/share/usefulidiot/plugins/'
-            log.debug('plugin_dir set to default: %s' % plugin_dir)
-    log.debug('found plugin(s) directory to be: %s' % plugin_dir)
+            log.debug('plugin_dir set to default: %s', plugin_dir)
+    log.debug('found plugin(s) directory to be: %s', plugin_dir)
 
     if not plugin_dir:
         print 'ERROR: Unable to determine plugin directory'
         sys.exit(1)
 
     if not os.path.isdir(plugin_dir):
-        log.debug('plugin directory does not exist: %s' % plugin_dir)
+        log.debug('plugin directory does not exist: %s', plugin_dir)
         print 'ERROR: Plugin directory does not exist: %s' % plugin_dir
         sys.exit(1)
-    log.debug('attempting to load plugin from %s' % plugin_dir)
+    log.debug('attempting to load plugin from %s', plugin_dir)
     if os.path.isfile(plugin_dir + loaded_plugin):
         log.debug('plugin found at: ' + plugin_dir + loaded_plugin)
         plugin_path = plugin_dir + loaded_plugin
