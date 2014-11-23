@@ -31,8 +31,8 @@ def reboot_system():
     """you realize this is dangerous, right?"""
     # Use the following command for testing.
     try:
-        shutdown = subprocess.Popen(['/sbin/shutdown','now'],
-                stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        shutdown = subprocess.Popen(['/sbin/shutdown', 'now'],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = shutdown.communicate()
         return_code = shutdown.returncode
         if return_code == 0:
