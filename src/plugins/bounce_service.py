@@ -34,8 +34,7 @@ def run(options={}):
         try:
             service_status = subprocess.Popen([service, 'status'],
                 stdout=subprocess.PIPE).communicate()[0]
-        except:
-            OSError
+        except OSError:
             # try again
             break
         if 'running' in service_status.lower():
