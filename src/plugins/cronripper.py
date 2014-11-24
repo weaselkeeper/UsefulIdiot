@@ -53,7 +53,7 @@ def run(options={}):
             _message = 'I would have decronned: %s ' % target_user
             return _success, _message
 
-    _success,_message = kill_crontab(target_user)
+    _success, _message = kill_crontab(target_user)
 
     return _success, _message
 
