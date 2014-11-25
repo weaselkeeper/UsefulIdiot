@@ -16,18 +16,18 @@ import sys
 try:
     import rpm
 except ImportError:
-    error = """No rpm module avaible, maybe this isn't an rpm system? 
+    error = """No rpm module avaible, maybe this isn't an rpm system?
 Either install the rpm module, or find some other way"""
     print error
     sys.exit(1)
 
 def run(options={}):
-    print options.keys()
     """main loop for this plugin"""
+    print options.keys()
     from random import choice
 
-    success = 0
-    message = "package_nuker completed it's run"
+    _success = 0
+    _message = "package_nuker completed it's run"
 
     # initialize RPM database connection
     ts = rpm.TransactionSet()
@@ -42,13 +42,13 @@ def run(options={}):
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            message = 'I would have uninstalled: %s' % target_package['name']
-            return success, message
+            _message = 'I would have uninstalled: %s' % target_package['name']
+            return _success, _message
 
     # uninstalling does not yet work, need to work on that bit
-    success = rpm_uninstall(target_package)
+    _success = rpm_uninstall(target_package)
 
-    return success, message
+    return _success, _message
 
 def rpm_uninstall(pkg):
     """try to uninstall the package, returning the result"""
@@ -60,6 +60,6 @@ def rpm_uninstall(pkg):
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success, message = run()
-    print success, message
+    _success, _message = run()
+    print _success, _message
 
