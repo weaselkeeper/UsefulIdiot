@@ -16,16 +16,16 @@ hostname = socket.gethostname()
 def run(options={}):
     """main loop for this plugin"""
 
-    success = 1
-    message = 'reboot unsuccessful'
+    _success = 1
+    _message = 'reboot unsuccessful'
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
-            success = 0
-            message = 'I would have rebooted server %s' % hostname
-            return success, message
-    success, message = reboot_system()
-    return success, message
+            _success = 0
+            _message = 'I would have rebooted server %s' % hostname
+            return _success, _message
+    _success, _message = reboot_system()
+    return _success, _message
 
 def reboot_system():
     """you realize this is dangerous, right?"""
@@ -36,19 +36,19 @@ def reboot_system():
         out, err = shutdown.communicate()
         return_code = shutdown.returncode
         if return_code == 0:
-            success = 0
-            message = 'rebooting server %s' % hostname
+            _success = 0
+            _message = 'rebooting server %s' % hostname
         else:
-            success = 1
-            message = 'unable to reboot server %s due to %s' % (hostname, err)
-        return success, message
+            _success = 1
+            _message = 'unable to reboot server %s due to %s' % (hostname, err)
+        return _success, _message
     except Exception as error:
-        success = 1
-        message = 'unable to reboot server %s due to %s' % (hostname, error)
-        return success, message
+        _success = 1
+        _message = 'unable to reboot server %s due to %s' % (hostname, error)
+        return _success, _message
 
 if __name__ == "__main__":
     """This is where we will begin when called from CLI"""
-    success, message = run()
-    print success, message
+    _success, _message = run()
+    print _success, _message
 
