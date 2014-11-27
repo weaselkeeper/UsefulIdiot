@@ -12,6 +12,8 @@
 # it, unsure if we should force, or switch to using yum/apt and removing those
 # dependant packages also.
 
+""" Remove a random package (rpm only, for now) """
+
 import sys
 try:
     import rpm
