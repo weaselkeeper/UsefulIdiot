@@ -96,6 +96,6 @@ def get_user():
 
 
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    # This is where we will begin when called from CLI
     success, message = run()
     print success, message
