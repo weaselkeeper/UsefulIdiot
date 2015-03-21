@@ -211,7 +211,7 @@ if __name__ == "__main__":
     except NameError:
         plugins = cfg.get_item('plugins').split(',')
         log.debug('plugins override not found, pulling from config file: %s'
-                  % plugins)
+                  , plugins)
     log.debug('found plugin(s) to use: %s', plugins)
     if args.list_plugins:
         print 'available plugins are:'
