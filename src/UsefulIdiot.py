@@ -100,7 +100,7 @@ class ConfigFile(object):
     def get_item(self, cfgitem, section='default', hard_fail=False):
         """Retrieve value for requested key from the config file"""
         log.debug('in ConfigFile().get_item(self, %s, %s, %s)', cfgitem,
-                section, hard_fail)
+                  section, hard_fail)
 
         def do_fail(err):
             """ do something with a caught error """
@@ -137,12 +137,13 @@ if __name__ == "__main__":
     cmd_parser.add_argument(
         '-n', '--dry-run', dest='dryrun', action='store_true',
         help='Dry run, do not actually perform action', default=False)
-    cmd_parser.add_argument(
-        '-l', '--list_plugins', dest='list_plugins', action='store_true',
-        help='List available plugins', default=False)
+    cmd_parser.add_argument('-l', '--list_plugins', dest='list_plugins',
+                            action='store_true',
+                            help='List available plugins', default=False)
     cmd_parser.add_argument('-d', '--debug', dest='debug',
-        action='store_true', help='Enable debugging during execution.',
-        default=None)
+                            action='store_true',
+                            help='Enable debugging during execution.',
+                            default=None)
     cmd_parser.add_argument('-o', '--options', dest='options', action='store',
         default=None,
         help='Key/value options to pass to the plugin. Must be in key=value form, seperated by a comma with no space. Example: foo=bar,baz=blah')
