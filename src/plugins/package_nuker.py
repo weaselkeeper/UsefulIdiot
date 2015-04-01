@@ -61,7 +61,7 @@ def rpm_uninstall(pkg):
 
 
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    #This is where we will begin when called from CLI
     _success, _message = run()
     print _success, _message
 
