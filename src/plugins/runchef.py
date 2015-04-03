@@ -34,7 +34,7 @@ def run(options={}):
 def restart_Chef():
     """restarting Chef, as root of course."""
     process = subprocess.Popen(['/sbin/service', 'Chef-client restart'],
-            stdout=subprocess.PIPE)
+                               stdout=subprocess.PIPE)
     _message = process.communicate()[0]
     return _message
 
