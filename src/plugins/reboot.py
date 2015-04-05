@@ -32,7 +32,7 @@ def reboot_system():
     # Use the following command for testing.
     try:
         shutdown = subprocess.Popen(['/sbin/shutdown', 'now'],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = shutdown.communicate()
         return_code = shutdown.returncode
         if return_code == 0:
