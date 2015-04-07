@@ -24,7 +24,8 @@ def run(options={}):
 
     # this is the pid we will kill
     target_pid = choice(get_pids())
-    _message = "pidkiller did not complete it's run, for some reason, failing to kill Process %s" % target_pid
+    _message = "pidkiller failed to kill Process %s" % target_pid
+
 
     if 'dryrun' in options:
         if options['dryrun'] == True:
