@@ -63,7 +63,8 @@ def kill_crontab(user):
     try:
         user_var = '-u' + user
         cronkill = subprocess.Popen(['crontab', '-r', user_var],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE,\
+                                    stderr=subprocess.PIPE)
         out, err = cronkill.communicate()
         rc = cronkill.poll()
         if rc:
