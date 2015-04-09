@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+""" cronripper"""
+
 DOCUMENTATION = '''
 ---
 module: cronripper
