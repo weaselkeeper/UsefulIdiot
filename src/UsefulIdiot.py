@@ -145,9 +145,10 @@ if __name__ == "__main__":
                             help='Enable debugging during execution.',
                             default=None)
     cmd_parser.add_argument('-o', '--options', dest='options', action='store',
-        default=None,
-        help='Key/value options to pass to the plugin. Must be in key=value \
-        form, seperated by a comma with no space. Example: foo=bar,baz=blah')
+                            default=None,
+                            help='Key/value options to pass to the plugin. \
+                            Must be in key=value form, seperated by a comma \
+                            with no space. Example: foo=bar,baz=blah')
     cmd_parser.add_argument('-p', '--plugin', dest='plugin_override',
         action='store', default=None,
         help='Specify a specific plugin to run, instead of choosing randomly.')
