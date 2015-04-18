@@ -150,8 +150,8 @@ if __name__ == "__main__":
                             Must be in key=value form, seperated by a comma \
                             with no space. Example: foo=bar,baz=blah')
     cmd_parser.add_argument('-p', '--plugin', dest='plugin_override',
-        action='store', default=None,
-        help='Specify a specific plugin to run, instead of choosing randomly.')
+                            action='store', default=None,
+                            help='Specify a specific plugin to run.')
     cmd_parser.add_argument('-P', '--pluginpath', dest='plugin_dir_override',
         action='store', default=None,
         help='Specify a path to load plugins from.')
