@@ -153,8 +153,8 @@ if __name__ == "__main__":
                             action='store', default=None,
                             help='Specify a specific plugin to run.')
     cmd_parser.add_argument('-P', '--pluginpath', dest='plugin_dir_override',
-        action='store', default=None,
-        help='Specify a path to load plugins from.')
+                            action='store', default=None,
+                            help='Specify a path to load plugins from.')
     cmd_parser.add_argument('-r', '--readable', dest='human_readable',
         action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
