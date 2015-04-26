@@ -156,8 +156,8 @@ if __name__ == "__main__":
                             action='store', default=None,
                             help='Specify a path to load plugins from.')
     cmd_parser.add_argument('-r', '--readable', dest='human_readable',
-        action='store_true', default=False,
-        help='Display output in human readable formant (as opposed to json).')
+                            action='store_true', default=False,
+                            help='Display output in human readable formant')
     cmd_parser.add_argument('-c', '--config', dest='config_override',
         action='store', default=None,
         help='Specify a path to an alternate config file')
