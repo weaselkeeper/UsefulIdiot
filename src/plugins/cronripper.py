@@ -87,7 +87,7 @@ def kill_crontab(user):
 def get_user():
     """get list of valid users with crontabs"""
     users = subprocess.Popen(['getent', 'passwd'],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     user_list, error = users.communicate()
     user = choice(user_list.split('\n'))
