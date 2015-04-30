@@ -39,7 +39,7 @@ def run(options={}):
             break
         if 'running' in service_status.lower():
             service_status = subprocess.Popen([service, 'restart'],
-                             stdout=subprocess.PIPE).communicate()[0]
+                                              stdout=subprocess.PIPE).communicate()[0]
             not_running = 0
     return 0, service_status
 
