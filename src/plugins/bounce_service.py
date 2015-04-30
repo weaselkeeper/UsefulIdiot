@@ -33,7 +33,7 @@ def run(options={}):
                 return success, message
         try:
             service_status = subprocess.Popen([service, 'status'],
-                             stdout=subprocess.PIPE).communicate()[0]
+                                              stdout=subprocess.PIPE).communicate()[0]
         except OSError:
             # try again
             break
