@@ -26,3 +26,7 @@ runchef:	Forces a chef run.  Hope you didn't make any changes and not update che
 tempreaper:	Removes files in /tmp.  Were they important?
 
 toggle_selinux:	(En/Dis)able SELinux.  Puppet/chef/etc should set that right, right?
+
+## Building
+There's a makefile, on an rpm based system, try make rpm, on deb based, try make deb
+make help will present you with the target options in the makefile
