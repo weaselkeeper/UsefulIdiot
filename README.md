@@ -11,7 +11,7 @@ Currently, we have the following plugins.
 
 pidkiller:	Kills a random pid
 
-bouncer:	Bounces a random service.
+bouncer:	Bounces a random service. (does not yet support systemd, or upstart for that matter)
 
 cronripper:	Deletes the crontab of a valid, random user. All crontabs should be in puppet. Or other CMS
 
