@@ -2,7 +2,7 @@ Name:           usefulidiot
 Version:        VERSION
 
 Release:        RELEASE
-Summary:        A python re-implimentation of Netflix's Simian Army
+Summary:        A python re-implementation of Netflix's Simian Army
 License:        GPLv3
 URL:            https://github.com/weaselkeeper/UsefulIdiot
 Group:          System Environment/Base
@@ -16,7 +16,7 @@ Requires:       python-argparse
 Requires:       python-simplejson
 
 %description
-A plugable framework to create chaos on your network. Designed to be used with
+A plug-able framework to create chaos on your network. Designed to be used with
 Ansible. UsefulIdiot will help pinpoint areas where you need to improve
 automation, documentation and/or monitoring.
 
