@@ -28,5 +28,19 @@ tempreaper:	Removes files in /tmp.  Were they important?
 toggle_selinux:	(En/Dis)able SELinux.  Puppet/chef/etc should set that right, right?
 
 ## Building
-There's a makefile, on an rpm based system, try make rpm, on deb based, try make deb
-make help will present you with the target options in the makefile
+
+Makefile for usefulidiot, currently supports deb and rpm 
+ builds from current source tree.
+```
+Usage: make <target>
+Available targets are:
+	deb			Create deb
+	sources			Create tarball
+	srpm			Create srpm
+	rpm			Create rpm
+	clean			Remove work dir
+	testall			Build all the things
+```
+
+There area few prerequisites you'll need of course, the relevant build tools for your system's package management system.
+
