@@ -42,5 +42,5 @@ Available targets are:
 	testall			Build all the things
 ```
 
-There area few prerequisites you'll need of course, the relevant build tools for your system's package management system.
+There are a few prerequisites you'll need of course, the relevant build tools for your system's package management system.
 
